@@ -518,12 +518,77 @@
                     <li>Delivered <strong>80% performance improvement</strong> on critical invoicing workflows (60s → 8–15s) using PostgreSQL indexing, advanced profiling, and asynchronous worker queues.</li>
                     <li>Applied the <strong>Open/Closed Principle (OCP)</strong> to refactor monolithic Odoo functions into modular, single-responsibility components with intelligent dispatch routing for future extensibility.</li>
                 </ul>
-                <div class="tl-tags">
-                    <span class="tl-tag">80% Perf. Improvement</span>
+
+                <!-- Case Study 1: Electronic Invoicing -->
+                <div style="margin-top:1.1rem;padding:1.2rem 1.4rem;background:#1e2a1a;border:1px solid #4a7c3f;border-radius:5px;">
+                    <p style="font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#7dbf6a;margin-bottom:.7rem;">
+                        ▸ Case Study — Electronic Invoicing Engine (Django · SUNAT API)
+                    </p>
+                    <p style="font-size:.88rem;color:#c8d8c4;margin-bottom:.8rem;">
+                        Redesigned the entire electronic invoicing flow in Django, replacing a slow Odoo process (~2 min/invoice) with an async-first engine capable of generating <strong style="color:#e8f0e5;">50 PDF invoices with QR in ~35 seconds</strong> using 10 concurrent workers.
+                    </p>
+                    <ul style="padding-left:1.1rem;list-style:disc;">
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
+                            <strong style="color:#e8f0e5;">Data Pipeline:</strong> Orchestrated invoice data using <strong style="color:#e8f0e5;">Django ORM</strong> combined with multiple internal APIs, managing base tables (templates, sequences, series) via atomic transactions to guarantee data consistency.
+                        </li>
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
+                            <strong style="color:#e8f0e5;">Async/Sync Dual Mode:</strong> Engineered the SUNAT API integration to operate in <strong style="color:#e8f0e5;">async mode as primary</strong> with automatic synchronous fallback — ensuring delivery resilience under API instability.
+                        </li>
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
+                            <strong style="color:#e8f0e5;">Retry & Fault Tolerance:</strong> Implemented configurable retry logic with exponential backoff, recording both success and failure states to the DB for full auditability and compliance traceability.
+                        </li>
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
+                            <strong style="color:#e8f0e5;">PDF + QR Generation:</strong> Transformed SUNAT XML responses into signed PDF invoices with embedded QR codes, automatically dispatched to the customer and billing team via email.
+                        </li>
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
+                            <strong style="color:#e8f0e5;">Quality Assurance:</strong> Entire integration validated with unit and integration test suites before production deployment — covering happy paths, API failures, and retry scenarios.
+                        </li>
+                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:0;">
+                            <strong style="color:#e8f0e5;">Result:</strong> <code style="font-family:var(--mono);font-size:.8rem;background:rgba(255,255,255,.08);padding:.1rem .35rem;border-radius:3px;">~2 min/invoice in Odoo → 50 invoices in 35s in Django</code> — a <strong style="color:#a8e090;">~170× throughput improvement</strong>.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Case Study 2: Five9 / SFTP -->
+                <div style="margin-top:1rem;padding:1.2rem 1.4rem;background:#1a1e2a;border:1px solid #3a4a7c;border-radius:5px;">
+                    <p style="font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#7a9edf;margin-bottom:.7rem;">
+                        ▸ Case Study — High-Availability Sync Architecture (Odoo 13 · Five9 SFTP)
+                    </p>
+                    <p style="font-size:.88rem;color:#c4cce0;margin-bottom:.8rem;">
+                        Re-engineered a custom Odoo module that syncs telephony data (recordings, transcripts, reports) from a <strong style="color:#e5eaf5;">Five9</strong> SFTP server. The original synchronous design was blocking operations company-wide during large data loads.
+                    </p>
+                    <ul style="padding-left:1.1rem;list-style:disc;">
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
+                            <strong style="color:#e5eaf5;">Decoupled Architecture:</strong> Migrated business logic to independent Python threads so the server processes SFTP data in the background — achieving <em>zero perceived latency</em> for end users during mass synchronizations.
+                        </li>
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
+                            <strong style="color:#e5eaf5;">Concurrency Control:</strong> Implemented indexed boolean flags in the DB to manage thread state and prevent race conditions during concurrent sync operations.
+                        </li>
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
+                            <strong style="color:#e5eaf5;">SQL Optimization:</strong> Reduced query cost on 40k+ record detail tables using B-Tree indexes on <code style="font-family:var(--mono);font-size:.78rem;background:rgba(255,255,255,.06);padding:.1rem .3rem;border-radius:2px;">Many2one</code> foreign keys and PostgreSQL views for high-performance reporting.
+                        </li>
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
+                            <strong style="color:#e5eaf5;">Storage & Batch Strategy:</strong> Designed a configurable auto-sanitization system (<code style="font-family:var(--mono);font-size:.78rem;background:rgba(255,255,255,.06);padding:.1rem .3rem;border-radius:2px;">days_to_sanitize</code>) with batch processing — achieving a <strong style="color:#90b8e0;">30% reduction in production storage</strong>.
+                        </li>
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
+                            <strong style="color:#e5eaf5;">Robust SFTP Integration:</strong> Re-engineered Paramiko-based client with hierarchical exception handling and automatic connection retry logic, ensuring resilience against network failures.
+                        </li>
+                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:0;">
+                            <strong style="color:#e5eaf5;">Forward-looking Design:</strong> System architected to handle projected data growth through 2026, with scalability built into the batch and threading model from the ground up.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tl-tags" style="margin-top:.9rem;">
+                    <span class="tl-tag">~170× Invoice Throughput</span>
+                    <span class="tl-tag">SUNAT API · e-Invoicing</span>
+                    <span class="tl-tag">Async/Sync Fallback</span>
                     <span class="tl-tag">Odoo v13→v17</span>
+                    <span class="tl-tag">Python Threading</span>
+                    <span class="tl-tag">SFTP · Paramiko</span>
+                    <span class="tl-tag">PostgreSQL · B-Tree Index</span>
+                    <span class="tl-tag">30% Storage Saved</span>
                     <span class="tl-tag">Design Patterns</span>
-                    <span class="tl-tag">PostgreSQL</span>
-                    <span class="tl-tag">Async Workers</span>
                 </div>
             </div>
 
@@ -698,14 +763,14 @@
         <h2 class="section-heading">Key Metrics <span class="bar"></span></h2>
         <div class="metrics-grid">
             <div class="metric-card">
+                <div class="metric-n">~170×</div>
+                <h4>Invoice Throughput</h4>
+                <p>From ~2 min/invoice in Odoo to 50 invoices in 35s in Django — using async mode with 10 concurrent workers. (Fiberlux)</p>
+            </div>
+            <div class="metric-card">
                 <div class="metric-n">80%</div>
                 <h4>Invoicing Performance</h4>
                 <p>Reduced critical Odoo invoicing workflow from 60s to 8–15s via PostgreSQL indexing, profiling, and async worker queues. (Fiberlux)</p>
-            </div>
-            <div class="metric-card">
-                <div class="metric-n">45×</div>
-                <h4>Legacy System Optimization</h4>
-                <p>Reduced a critical Odoo module from 20+ hours to under 3 hours via systematic profiling, query refactors, and indexing.</p>
             </div>
             <div class="metric-card">
                 <div class="metric-n">6→3</div>
@@ -713,9 +778,9 @@
                 <p>Consolidated 6 fragmented external APIs into 3 major endpoints, drastically reducing integration complexity. (Fiberlux)</p>
             </div>
             <div class="metric-card">
-                <div class="metric-n">100%</div>
-                <h4>Test Coverage Achieved</h4>
-                <p>Django API Template: 60+ tests covering endpoints, auth flows, and role-based permissions with Factory Boy.</p>
+                <div class="metric-n">30%</div>
+                <h4>Storage Reduction</h4>
+                <p>Automated file sanitization with configurable batch processing eliminated 30% of production storage on the Five9 SFTP sync module.</p>
             </div>
         </div>
     </div>
