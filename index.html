@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,1095 +7,793 @@
     <title>Luis Gonzalez — Backend Python Engineer</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-
     <style>
-        /* ─── TOKENS ─────────────────────────────────────────── */
-        :root {
-            --ink:       #0d1117;
-            --paper:     #f8f5f0;
-            --warm-mid:  #e8e3db;
-            --accent:    #c0392b;
-            --accent2:   #e67e22;
-            --muted:     #6b7280;
-            --code-bg:   #1a1f2e;
-            --code-text: #a8d5a2;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono:  'DM Mono', 'Courier New', monospace;
-            --sans:  'DM Sans', system-ui, sans-serif;
-        }
-
-        /* ─── RESET / BASE ───────────────────────────────────── */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            font-size: 16px;
-            color: var(--ink);
-            background: var(--paper);
-            line-height: 1.7;
-        }
-
-        a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
-        a:hover { opacity: .75; }
-
-        /* ─── HEADER ─────────────────────────────────────────── */
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            background: rgba(248,245,240,.92);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--warm-mid);
-        }
-
-        header ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-            padding: .9rem 2.5rem;
-            justify-content: flex-end;
-        }
-
-        header ul li a {
-            font-family: var(--mono);
-            font-size: .78rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            transition: color .2s;
-        }
-        header ul li a:hover { color: var(--accent); opacity: 1; }
-
-        /* ─── LEAD / HERO ────────────────────────────────────── */
-        #lead {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--code-bg);
-            position: relative;
-            overflow: hidden;
-            padding: 6rem 2rem 4rem;
-        }
-
-        /* grid texture */
-        #lead::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(168,213,162,.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(168,213,162,.04) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        /* accent blobs */
-        #lead::after {
-            content: '';
-            position: absolute;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(192,57,43,.15) 0%, transparent 70%);
-            top: -150px; right: -150px;
-            pointer-events: none;
-        }
-
-        #lead-content {
-            position: relative;
-            z-index: 1;
-            max-width: 820px;
-            text-align: left;
-        }
-
-        .lead-label {
-            font-family: var(--mono);
-            font-size: .75rem;
-            color: var(--code-text);
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-        }
-        .lead-label::before {
-            content: '';
-            display: inline-block;
-            width: 28px; height: 1px;
-            background: var(--code-text);
-        }
-
-        #lead-content h1 {
-            font-family: var(--serif);
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            color: #f0ece5;
-            line-height: 1.05;
-            letter-spacing: -.02em;
-            margin-bottom: .5rem;
-        }
-
-        #lead-content h2 {
-            font-family: var(--sans);
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            color: rgba(240,236,229,.5);
-            font-weight: 300;
-            letter-spacing: .03em;
-            margin-bottom: 2.5rem;
-        }
-
-        .lead-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .badge {
-            font-family: var(--mono);
-            font-size: .7rem;
-            padding: .3rem .75rem;
-            border-radius: 2px;
-            background: rgba(168,213,162,.08);
-            border: 1px solid rgba(168,213,162,.2);
-            color: var(--code-text);
-            letter-spacing: .06em;
-        }
-
-        .btn-rounded-white {
-            display: inline-block;
-            padding: .75rem 2rem;
-            border: 2px solid rgba(240,236,229,.3);
-            border-radius: 3px;
-            color: #f0ece5;
-            font-family: var(--mono);
-            font-size: .8rem;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            transition: all .25s;
-            margin-right: 1rem;
-            margin-bottom: .5rem;
-        }
-        .btn-rounded-white:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            opacity: 1;
-        }
-
-        /* ─── SECTION BASE ───────────────────────────────────── */
-        section {
-            padding: 6rem 0;
-        }
-
-        .heading {
-            font-family: var(--serif);
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            color: var(--ink);
-            letter-spacing: -.02em;
-            margin-bottom: 3.5rem;
-            text-align: center;
-            position: relative;
-        }
-        .heading::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 3px;
-            background: var(--accent);
-            margin: .8rem auto 0;
-        }
-
-        /* ─── ABOUT ──────────────────────────────────────────── */
-        #about {
-            background: var(--paper);
-        }
-
-        #about .col-md-4 {
-            padding-right: 3rem;
-        }
-
-        #about h2.heading {
-            text-align: left;
-        }
-        #about h2.heading::after {
-            margin-left: 0;
-        }
-
-        #about p {
-            color: #374054;
-            margin-bottom: 1.2rem;
-            font-size: 1.02rem;
-        }
-
-        .stat-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        .stat-item {
-            background: var(--code-bg);
-            border-radius: 4px;
-            padding: 1rem 1.4rem;
-            flex: 1;
-            min-width: 130px;
-        }
-        .stat-number {
-            font-family: var(--serif);
-            font-size: 2rem;
-            color: var(--code-text);
-            line-height: 1;
-        }
-        .stat-label {
-            font-family: var(--mono);
-            font-size: .65rem;
-            color: rgba(168,213,162,.6);
-            text-transform: uppercase;
-            letter-spacing: .1em;
-            margin-top: .3rem;
-        }
-
-        /* ─── EXPERIENCE ─────────────────────────────────────── */
-        #experience {
-            background: var(--warm-mid);
-        }
-
-        #experience-timeline {
-            max-width: 760px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        #experience-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0; bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent), var(--accent2));
-        }
-
-        .vtimeline-content {
-            margin-left: 2.5rem;
-            padding: 1.5rem 2rem;
-            background: var(--paper);
-            border-radius: 4px;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .vtimeline-content::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 1.6rem;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: 2px solid var(--warm-mid);
-        }
-
-        .vtimeline-date {
-            font-family: var(--mono);
-            font-size: .7rem;
-            color: var(--muted);
-            letter-spacing: .06em;
-            margin-bottom: .4rem;
-        }
-
-        .vtimeline-content h3 {
-            font-family: var(--serif);
-            font-size: 1.3rem;
-            color: var(--ink);
-            margin-bottom: .1rem;
-        }
-
-        .vtimeline-content h4 {
-            font-family: var(--mono);
-            font-size: .78rem;
-            color: var(--accent);
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            margin-bottom: .8rem;
-        }
-
-        .vtimeline-content p, .vtimeline-content li {
-            color: #374054;
-            font-size: .95rem;
-        }
-
-        .vtimeline-content ul {
-            padding-left: 1.2rem;
-            margin-top: .4rem;
-        }
-
-        .vtimeline-content li { margin-bottom: .3rem; }
-
-        .highlight-badge {
-            display: inline-block;
-            background: rgba(192,57,43,.1);
-            border: 1px solid rgba(192,57,43,.25);
-            color: var(--accent);
-            font-family: var(--mono);
-            font-size: .65rem;
-            padding: .2rem .6rem;
-            border-radius: 2px;
-            margin-top: .6rem;
-            margin-right: .4rem;
-            letter-spacing: .06em;
-        }
-
-        /* ─── EDUCATION ──────────────────────────────────────── */
-        #education {
-            background: var(--paper);
-        }
-
-        .education-block {
-            max-width: 760px;
-            margin: 0 auto 2rem;
-            background: var(--warm-mid);
-            padding: 2rem 2.5rem;
-            border-radius: 4px;
-            border-left: 3px solid var(--accent);
-        }
-
-        .education-block h3 {
-            font-family: var(--serif);
-            font-size: 1.4rem;
-            color: var(--ink);
-        }
-
-        .education-date {
-            font-family: var(--mono);
-            font-size: .72rem;
-            color: var(--muted);
-            display: block;
-            margin: .3rem 0 .2rem;
-        }
-
-        .education-block h4 {
-            font-family: var(--sans);
-            font-weight: 500;
-            font-size: .95rem;
-            color: var(--accent);
-            margin-bottom: .7rem;
-        }
-
-        .education-block p { color: #374054; font-size: .95rem; }
-
-        /* ─── PROJECTS ───────────────────────────────────────── */
-        #projects {
-            background: var(--code-bg);
-        }
-
-        #projects .heading {
-            color: #f0ece5;
-        }
-        #projects .heading::after { background: var(--code-text); }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .project-card {
-            background: rgba(240,236,229,.04);
-            border: 1px solid rgba(168,213,162,.1);
-            border-radius: 6px;
-            padding: 2rem;
-            transition: transform .25s, border-color .25s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(168,213,162,.3);
-        }
-
-        .project-card .card-icon {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-card h3 {
-            font-family: var(--serif);
-            font-size: 1.2rem;
-            color: #f0ece5;
-            margin-bottom: .5rem;
-        }
-
-        .project-card .card-subtitle {
-            font-family: var(--mono);
-            font-size: .65rem;
-            color: var(--code-text);
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            margin-bottom: .8rem;
-        }
-
-        .project-card p {
-            color: rgba(240,236,229,.6);
-            font-size: .9rem;
-            line-height: 1.65;
-            flex: 1;
-            margin-bottom: 1.2rem;
-        }
-
-        .card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .4rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .card-tag {
-            font-family: var(--mono);
-            font-size: .62rem;
-            padding: .2rem .55rem;
-            border-radius: 2px;
-            background: rgba(168,213,162,.08);
-            color: var(--code-text);
-            border: 1px solid rgba(168,213,162,.15);
-        }
-
-        .card-link {
-            font-family: var(--mono);
-            font-size: .72rem;
-            color: var(--code-text);
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(168,213,162,.3);
-            padding-bottom: 1px;
-            align-self: flex-start;
-            transition: color .2s;
-        }
-        .card-link:hover { color: #fff; opacity: 1; }
-
-        .card-link + .card-link { margin-left: 1rem; }
-
-        /* ─── SKILLS ─────────────────────────────────────────── */
-        #skills {
-            background: var(--warm-mid);
-        }
-
-        .skills-grid {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            padding: 0 1.5rem;
-        }
-
-        .skill-group h4 {
-            font-family: var(--mono);
-            font-size: .72rem;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            padding-bottom: .5rem;
-            border-bottom: 1px solid var(--accent);
-        }
-
-        .skill-group ul {
-            list-style: none;
-        }
-
-        .skill-group li {
-            font-size: .93rem;
-            color: #374054;
-            padding: .35rem 0;
-            border-bottom: 1px solid rgba(0,0,0,.05);
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .skill-group li::before {
-            content: '▸';
-            color: var(--accent);
-            font-size: .7rem;
-        }
-
-        /* ─── ACHIEVEMENTS SECTION ───────────────────────────── */
-        #achievements {
-            background: var(--paper);
-        }
-
-        .achievements-grid {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            padding: 0 1.5rem;
-        }
-
-        .achievement-card {
-            padding: 2rem;
-            border-radius: 4px;
-            border: 1px solid var(--warm-mid);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .achievement-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-        }
-
-        .achievement-number {
-            font-family: var(--serif);
-            font-size: 2.8rem;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: .4rem;
-        }
-
-        .achievement-card h4 {
-            font-family: var(--sans);
-            font-weight: 600;
-            font-size: .95rem;
-            color: var(--ink);
-            margin-bottom: .5rem;
-        }
-
-        .achievement-card p {
-            font-size: .88rem;
-            color: var(--muted);
-        }
-
-        /* ─── CONTACT ────────────────────────────────────────── */
-        #contact {
-            background: var(--code-bg);
-            text-align: center;
-        }
-
-        #contact h2.heading { color: #f0ece5; }
-        #contact h2.heading::after { background: var(--code-text); }
-
-        #contact p {
-            color: rgba(240,236,229,.55);
-            max-width: 520px;
-            margin: 0 auto 2rem;
-            font-size: .97rem;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* ─── FOOTER ─────────────────────────────────────────── */
-        footer {
-            background: #080d12;
-            padding: 2.5rem 1rem;
-            text-align: center;
-        }
-
-        footer p {
-            font-family: var(--mono);
-            font-size: .72rem;
-            color: rgba(240,236,229,.3);
-            letter-spacing: .08em;
-            margin-bottom: .8rem;
-        }
-
-        footer ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 1.4rem;
-        }
-
-        footer ul li a {
-            color: rgba(240,236,229,.35);
-            font-size: 1.1rem;
-            transition: color .2s;
-        }
-        footer ul li a:hover { color: var(--code-text); opacity: 1; }
-
-        /* ─── RESPONSIVE ─────────────────────────────────────── */
-        @media (max-width: 768px) {
-            header ul { gap: 1rem; padding: .8rem 1.2rem; justify-content: center; flex-wrap: wrap; }
-            #lead-content h1 { font-size: 2.8rem; }
-            #about .col-md-4 { padding-right: 1rem; margin-bottom: 2rem; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .stat-row { gap: .6rem; }
-        }
-
-        /* ─── ANIMATIONS ─────────────────────────────────────── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        #lead-content > * {
-            animation: fadeUp .8s ease both;
-        }
-        .lead-label    { animation-delay: .1s; }
-        #lead-content h1 { animation-delay: .25s; }
-        #lead-content h2 { animation-delay: .4s; }
-        .lead-badges   { animation-delay: .55s; }
-        #lead-down     { animation-delay: .7s; }
-
-        /* lead down arrow */
-        #lead-down {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        #lead-down span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: 1px solid rgba(168,213,162,.3);
-            color: var(--code-text);
-            font-size: .9rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(6px); }
-        }
+    /* ── TOKENS ─────────────────────────────────── */
+    :root {
+        --ink:      #111318;
+        --paper:    #f6f4f0;
+        --mid:      #e2ddd7;
+        --muted:    #7a808c;
+        --accent:   #d63031;
+        --green:    #a0c878;
+        --dark:     #161b27;
+        --darker:   #0e1119;
+        --serif:    'Syne', sans-serif;
+        --mono:     'JetBrains Mono', monospace;
+        --body:     'Inter', system-ui, sans-serif;
+    }
+
+    /* ── RESET ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 15px; }
+    body { font-family: var(--body); color: var(--ink); background: var(--paper); line-height: 1.65; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .18s; }
+    a:hover { opacity: .7; }
+    ul { list-style: none; }
+    p { margin-bottom: .9rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── HEADER ──────────────────────────────────── */
+    header {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+        background: rgba(246,244,240,.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--mid);
+        height: 48px;
+        display: flex; align-items: center;
+    }
+    header ul {
+        display: flex; gap: 0; width: 100%;
+        justify-content: flex-end; padding: 0 2rem;
+    }
+    header ul li a {
+        font-family: var(--mono); font-size: .68rem;
+        letter-spacing: .1em; text-transform: uppercase;
+        color: var(--muted); padding: .3rem .8rem;
+        transition: color .15s;
+    }
+    header ul li a:hover { color: var(--accent); opacity: 1; }
+
+    /* ── HERO ────────────────────────────────────── */
+    #lead {
+        min-height: 100vh;
+        background: var(--dark);
+        display: flex; align-items: center;
+        position: relative; overflow: hidden;
+        padding-top: 48px;
+    }
+    #lead::before {
+        content: '';
+        position: absolute; inset: 0;
+        background-image:
+            linear-gradient(rgba(160,200,120,.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(160,200,120,.03) 1px, transparent 1px);
+        background-size: 48px 48px;
+        pointer-events: none;
+    }
+    #lead::after {
+        content: '';
+        position: absolute;
+        width: 700px; height: 700px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(214,48,49,.12) 0%, transparent 65%);
+        top: -200px; right: -200px;
+        pointer-events: none;
+    }
+    #lead-content {
+        position: relative; z-index: 1;
+        max-width: 1100px; margin: 0 auto; padding: 0 4rem;
+        width: 100%;
+    }
+    .lead-eyebrow {
+        font-family: var(--mono); font-size: .7rem;
+        color: var(--green); letter-spacing: .2em;
+        text-transform: uppercase; margin-bottom: 1.2rem;
+        display: flex; align-items: center; gap: .8rem;
+    }
+    .lead-eyebrow::before {
+        content: ''; display: block;
+        width: 32px; height: 1px; background: var(--green);
+    }
+    #lead-content h1 {
+        font-family: var(--serif); font-size: clamp(3.6rem, 6.5vw, 5.8rem);
+        color: #edeae4; line-height: 1.0; letter-spacing: -.02em;
+        margin-bottom: .6rem; font-weight: 800;
+    }
+    #lead-content h1 em {
+        font-style: normal; color: var(--green);
+    }
+    #lead-content h2 {
+        font-family: var(--body); font-size: clamp(.95rem, 1.8vw, 1.15rem);
+        color: rgba(237,234,228,.45); font-weight: 300;
+        letter-spacing: .02em; margin-bottom: 2rem;
+    }
+    .lead-stack {
+        display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 2.2rem;
+    }
+    .chip {
+        font-family: var(--mono); font-size: .65rem;
+        padding: .25rem .7rem; border-radius: 2px;
+        background: rgba(160,200,120,.07);
+        border: 1px solid rgba(160,200,120,.18);
+        color: var(--green); letter-spacing: .05em;
+    }
+    .lead-cta { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .btn-primary, .btn-ghost {
+        display: inline-flex; align-items: center; gap: .4rem;
+        font-family: var(--mono); font-size: .72rem;
+        letter-spacing: .1em; text-transform: uppercase;
+        padding: .65rem 1.6rem; border-radius: 3px;
+        transition: all .2s; cursor: pointer;
+    }
+    .btn-primary {
+        background: var(--accent); color: #fff; border: 2px solid var(--accent);
+    }
+    .btn-primary:hover { background: #b52828; border-color: #b52828; opacity: 1; color: #fff; }
+    .btn-ghost {
+        background: transparent; color: rgba(237,234,228,.7);
+        border: 2px solid rgba(237,234,228,.2);
+    }
+    .btn-ghost:hover { border-color: rgba(237,234,228,.5); color: #edeae4; opacity: 1; }
+
+    #lead-down {
+        position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 1;
+    }
+    #lead-down a {
+        display: flex; align-items: center; justify-content: center;
+        width: 36px; height: 36px; border-radius: 50%;
+        border: 1px solid rgba(160,200,120,.25); color: var(--green);
+        font-size: .75rem; animation: bobble 2.2s ease-in-out infinite;
+    }
+    @keyframes bobble { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+    /* ── SECTION SHELL ───────────────────────────── */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--mid); }
+    .section-dark { background: var(--dark); }
+    .section-darker { background: var(--darker); }
+
+    .container { max-width: 1060px; margin: 0 auto; padding: 0 2.5rem; }
+
+    .section-heading {
+        font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem);
+        color: var(--ink); letter-spacing: -.02em; font-weight: 700;
+        margin-bottom: 3rem; text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    }
+    .section-heading .bar {
+        width: 36px; height: 3px; background: var(--accent); border-radius: 2px;
+    }
+    .section-dark .section-heading,
+    .section-darker .section-heading { color: #edeae4; }
+
+    /* ── ABOUT ───────────────────────────────────── */
+    .about-layout {
+        display: grid; grid-template-columns: 1fr 1.7fr; gap: 4rem; align-items: start;
+    }
+    .about-left h3 {
+        font-family: var(--serif); font-size: 1.6rem; font-weight: 700;
+        color: var(--ink); margin-bottom: .4rem; line-height: 1.2;
+    }
+    .about-left .role {
+        font-family: var(--mono); font-size: .72rem;
+        color: var(--accent); letter-spacing: .12em;
+        text-transform: uppercase; margin-bottom: 1.4rem;
+    }
+    .about-right p { color: #424955; font-size: .95rem; }
+    .about-right strong { color: var(--ink); }
+    .about-right code {
+        font-family: var(--mono); font-size: .82rem;
+        background: var(--mid); padding: .1rem .35rem; border-radius: 3px;
+        color: var(--accent);
+    }
+
+    .stats-row {
+        display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; margin-top: 1.4rem;
+    }
+    .stat {
+        background: var(--dark); border-radius: 4px; padding: .9rem 1rem;
+        text-align: center;
+    }
+    .stat-n {
+        font-family: var(--serif); font-size: 1.8rem; font-weight: 700;
+        color: var(--green); line-height: 1;
+    }
+    .stat-l {
+        font-family: var(--mono); font-size: .58rem; color: rgba(160,200,120,.55);
+        text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem;
+    }
+
+    /* ── TIMELINE ────────────────────────────────── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+        content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+        width: 2px;
+        background: linear-gradient(180deg, var(--accent) 0%, #e67e22 100%);
+        border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 2rem; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-dot {
+        position: absolute; left: -34px; top: 6px;
+        width: 12px; height: 12px; border-radius: 50%;
+        background: var(--accent); border: 2px solid var(--mid);
+    }
+    .tl-date {
+        font-family: var(--mono); font-size: .65rem; color: var(--muted);
+        letter-spacing: .08em; margin-bottom: .3rem;
+    }
+    .tl-item h3 {
+        font-family: var(--serif); font-size: 1.15rem; font-weight: 700;
+        color: var(--ink); margin-bottom: .1rem;
+    }
+    .tl-item h4 {
+        font-family: var(--mono); font-size: .68rem; color: var(--accent);
+        letter-spacing: .08em; text-transform: uppercase; margin-bottom: .7rem;
+    }
+    .tl-item ul { padding-left: 1.1rem; list-style: disc; }
+    .tl-item li { font-size: .9rem; color: #424955; margin-bottom: .25rem; }
+    .tl-item li strong { color: var(--ink); }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .7rem; }
+    .tl-tag {
+        font-family: var(--mono); font-size: .6rem;
+        background: rgba(214,48,49,.08); border: 1px solid rgba(214,48,49,.2);
+        color: var(--accent); padding: .15rem .5rem; border-radius: 2px;
+        letter-spacing: .05em;
+    }
+
+    /* ── EDUCATION ───────────────────────────────── */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .edu-card {
+        background: var(--paper); border-radius: 4px;
+        padding: 1.6rem 2rem; border-left: 3px solid var(--accent);
+    }
+    .edu-card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+    .edu-date {
+        font-family: var(--mono); font-size: .65rem; color: var(--muted);
+        display: block; margin: .25rem 0 .2rem; letter-spacing: .06em;
+    }
+    .edu-card h4 { font-size: .85rem; color: var(--accent); font-weight: 500; margin-bottom: .6rem; }
+    .edu-card p { font-size: .88rem; color: #424955; }
+
+    /* ── PROJECTS ────────────────────────────────── */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+    }
+    .proj-card {
+        background: rgba(237,234,228,.04);
+        border: 1px solid rgba(160,200,120,.1);
+        border-radius: 6px; padding: 1.5rem;
+        display: flex; flex-direction: column;
+        transition: transform .2s, border-color .2s;
+    }
+    .proj-card:hover { transform: translateY(-3px); border-color: rgba(160,200,120,.28); }
+    .proj-icon { font-size: 1.3rem; margin-bottom: .7rem; }
+    .proj-card h3 {
+        font-family: var(--serif); font-size: 1.02rem; font-weight: 700;
+        color: #edeae4; margin-bottom: .2rem;
+    }
+    .proj-sub {
+        font-family: var(--mono); font-size: .6rem; color: var(--green);
+        letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem;
+    }
+    .proj-card p {
+        color: rgba(237,234,228,.55); font-size: .84rem; line-height: 1.6;
+        flex: 1; margin-bottom: .9rem;
+    }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .8rem; }
+    .proj-tag {
+        font-family: var(--mono); font-size: .58rem;
+        background: rgba(160,200,120,.07); border: 1px solid rgba(160,200,120,.14);
+        color: var(--green); padding: .15rem .45rem; border-radius: 2px;
+    }
+    .proj-links { display: flex; gap: .8rem; }
+    .proj-link {
+        font-family: var(--mono); font-size: .63rem; color: var(--green);
+        letter-spacing: .06em; text-transform: uppercase;
+        border-bottom: 1px solid rgba(160,200,120,.3);
+        transition: color .15s;
+    }
+    .proj-link:hover { color: #fff; opacity: 1; border-color: #fff; }
+
+    .proj-card.featured { grid-column: span 2; }
+    .proj-card.featured .proj-body {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+        align-items: start;
+    }
+
+    /* ── METRICS ─────────────────────────────────── */
+    .metrics-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+    }
+    .metric-card {
+        background: var(--paper); border-radius: 4px; padding: 1.4rem;
+        border-top: 3px solid var(--accent);
+    }
+    .metric-n {
+        font-family: var(--serif); font-size: 2.6rem; font-weight: 800;
+        color: var(--accent); line-height: 1; margin-bottom: .3rem;
+    }
+    .metric-card h4 { font-size: .88rem; font-weight: 600; color: var(--ink); margin-bottom: .3rem; }
+    .metric-card p { font-size: .82rem; color: var(--muted); margin-bottom: 0; }
+
+    /* ── SKILLS ──────────────────────────────────── */
+    .skills-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem;
+    }
+    .skill-group h4 {
+        font-family: var(--mono); font-size: .65rem; letter-spacing: .14em;
+        text-transform: uppercase; color: var(--accent);
+        margin-bottom: .8rem; padding-bottom: .4rem;
+        border-bottom: 1px solid var(--accent);
+    }
+    .skill-group li {
+        font-size: .88rem; color: #424955; padding: .25rem 0;
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        display: flex; align-items: center; gap: .45rem;
+    }
+    .skill-group li::before { content: '▸'; color: var(--accent); font-size: .65rem; }
+
+    /* ── CONTACT ─────────────────────────────────── */
+    #contact { text-align: center; }
+    #contact .section-heading { color: #edeae4; }
+    .contact-tagline {
+        color: rgba(237,234,228,.5); max-width: 480px;
+        margin: 0 auto 2rem; font-size: .93rem;
+    }
+    .contact-btns { display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+        background: #080b12; padding: 1.8rem 1rem; text-align: center;
+    }
+    footer p {
+        font-family: var(--mono); font-size: .65rem;
+        color: rgba(237,234,228,.25); letter-spacing: .08em; margin-bottom: .7rem;
+    }
+    footer ul { display: flex; justify-content: center; gap: 1.2rem; }
+    footer ul li a { color: rgba(237,234,228,.3); font-size: 1rem; transition: color .2s; }
+    footer ul li a:hover { color: var(--green); opacity: 1; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+        .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .projects-grid { grid-template-columns: 1fr 1fr; }
+        .proj-card.featured { grid-column: span 2; }
+        .proj-card.featured .proj-body { grid-template-columns: 1fr; }
+        .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        .edu-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+        #lead-content { padding: 0 1.5rem; }
+        header ul { padding: 0 .6rem; }
+        header ul li a { padding: .3rem .35rem; font-size: .59rem; }
+        .container { padding: 0 1.2rem; }
+        .section { padding: 52px 0; }
+        .projects-grid { grid-template-columns: 1fr; }
+        .proj-card.featured { grid-column: span 1; }
+        .metrics-grid { grid-template-columns: 1fr 1fr; }
+        .skills-grid { grid-template-columns: 1fr; }
+        .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── ANIMATIONS ──────────────────────────────── */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .lead-eyebrow { animation: fadeUp .7s .1s both; }
+    #lead-content h1 { animation: fadeUp .7s .25s both; }
+    #lead-content h2 { animation: fadeUp .7s .38s both; }
+    .lead-stack { animation: fadeUp .7s .5s both; }
+    .lead-cta { animation: fadeUp .7s .62s both; }
     </style>
 </head>
-
 <body>
 
-<!-- ─── HEADER ─────────────────────────────────────────────── -->
+<!-- HEADER -->
 <header>
     <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#achievements">Metrics</a></li>
+        <li><a href="#metrics">Metrics</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
 </header>
 
-<!-- ─── HERO ──────────────────────────────────────────────── -->
+<!-- HERO -->
 <div id="lead">
     <div id="lead-content">
-        <p class="lead-label">Backend Python Engineer · Lima, Perú</p>
-        <h1>Luis<br>Gonzalez</h1>
-        <h2>Building reliable, high-performance backend systems</h2>
-
-        <div class="lead-badges">
-            <span class="badge">Python</span>
-            <span class="badge">Django · FastAPI · Flask</span>
-            <span class="badge">Celery · Redis</span>
-            <span class="badge">PostgreSQL</span>
-            <span class="badge">Docker · CI/CD</span>
-            <span class="badge">2+ yrs production</span>
+        <p class="lead-eyebrow">Backend Python Engineer · Lima, Perú · Open to Remote</p>
+        <h1>Luis<br><em>Gonzalez</em></h1>
+        <h2>Building reliable, high-performance backend systems in production</h2>
+        <div class="lead-stack">
+            <span class="chip">Python</span>
+            <span class="chip">Django · DRF</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">Celery · Redis</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Docker</span>
+            <span class="chip">GitHub Actions</span>
+            <span class="chip">2+ yrs production</span>
         </div>
-
-        <a href="https://drive.google.com/file/d/17ih_8HMMZnpPD0xPWrWmzjBwt1Kh_1mn/view?usp=sharing" class="btn-rounded-white" target="_blank">Download Resume</a>
-        <a href="#contact" class="btn-rounded-white">Get In Touch</a>
+        <div class="lead-cta">
+            <a href="https://drive.google.com/file/d/17ih_8HMMZnpPD0xPWrWmzjBwt1Kh_1mn/view?usp=sharing" class="btn-primary" target="_blank">
+                <i class="fa fa-download"></i> Resume
+            </a>
+            <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
+                <i class="fa fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/luisangelgp/" class="btn-ghost" target="_blank">
+                <i class="fa fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="#contact" class="btn-ghost">Get In Touch</a>
+        </div>
     </div>
-
     <div id="lead-down">
-        <a href="#about">
-            <span><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
-        </a>
+        <a href="#about"><span><i class="fa fa-chevron-down"></i></span></a>
     </div>
 </div>
 
-<!-- ─── ABOUT ─────────────────────────────────────────────── -->
-<div id="about">
+<!-- ABOUT -->
+<div id="about" class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h2 class="heading">About Me</h2>
-            </div>
-            <div class="col-md-8">
-                <p>
-                    I'm a <strong>Backend Python Engineer</strong> with 2+ years working on production systems, specializing in API design, process automation, and high-performance backend services. I build with Django, FastAPI, Flask, and Odoo — always focused on clean, maintainable architectures that scale in real-world environments.
-                </p>
-                <p>
-                    I enjoy tackling performance bottlenecks head-on: profiling with <code>cProfile</code>, tuning queries with <code>EXPLAIN ANALYZE</code>, and refactoring code to shave significant time off critical paths. I believe that clean code, strong test coverage, and proper observability are what separate a working system from a reliable one.
-                </p>
-                <p>
-                    Currently working on migrating a legacy Odoo v13 system into Django REST Framework services, while deepening my understanding of microservices architecture and AWS fundamentals. I'm also an active contributor to <strong>python-docs-es</strong>, the official Python documentation translation project for Spanish.
-                </p>
-                <p>
-                    Open to remote-friendly backend roles and collaboration on Python infrastructure or testing projects.
-                </p>
-
-                <div class="stat-row">
-                    <div class="stat-item">
-                        <div class="stat-number">2+</div>
-                        <div class="stat-label">Years in Production</div>
+        <div class="about-layout">
+            <div class="about-left">
+                <h3>Luis<br>Gonzalez</h3>
+                <p class="role">Backend Python Engineer</p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · subliandev@gmail.com</p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="stat-n">2+</div>
+                        <div class="stat-l">Yrs production</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">45×</div>
-                        <div class="stat-label">Performance Gain</div>
+                    <div class="stat">
+                        <div class="stat-n">45×</div>
+                        <div class="stat-l">Perf. gain</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Test Coverage</div>
+                    <div class="stat">
+                        <div class="stat-n">100%</div>
+                        <div class="stat-l">Test coverage</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">300%</div>
-                        <div class="stat-label">Query Speed Gain</div>
+                    <div class="stat">
+                        <div class="stat-n">60+</div>
+                        <div class="stat-l">Tests written</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- ─── EXPERIENCE ────────────────────────────────────────── -->
-<div id="experience">
-    <h2 class="heading">Experience</h2>
-    <div id="experience-timeline">
-
-        <div data-date="2022 – Present">
-            <div class="vtimeline-date">2022 – Present</div>
-            <h3>Backend Python Developer</h3>
-            <h4>Production Systems · Lima, Perú (Remote-friendly)</h4>
-            <ul>
-                <li>Designed and maintained REST APIs using <strong>Django REST Framework</strong> and <strong>FastAPI</strong>, handling real-world traffic and SLA requirements.</li>
-                <li>Delivered a <strong>45× performance improvement</strong> on a critical Odoo module: reduced processing time from 20+ hours to under 3 hours through systematic profiling (<code>cProfile</code>), query refactors, and strategic indexing.</li>
-                <li>Improved complex PostgreSQL query response times by <strong>300%</strong> on tables with 10,000+ records using <code>EXPLAIN ANALYZE</code> and query simplification.</li>
-                <li>Built asynchronous background task systems with <strong>Celery + Redis</strong> for CSV/Excel processing, email delivery, and report generation.</li>
-                <li>Architected automated payroll processing system using <strong>Django + Pandas + NumPy</strong>, eliminating manual calculation errors.</li>
-                <li>Implemented CI/CD pipelines with GitHub Actions and containerized services with Docker Compose.</li>
-                <li>Led migration of legacy Odoo v13 modules into clean <strong>Django REST Framework</strong> services with defined API boundaries.</li>
-            </ul>
-            <span class="highlight-badge">45× Odoo Optimization</span>
-            <span class="highlight-badge">300% Query Speedup</span>
-            <span class="highlight-badge">CI/CD · Docker</span>
-        </div>
-
-        <div data-date="Previous">
-            <div class="vtimeline-date">Earlier Experience</div>
-            <h3>Mi Beatriz S.A.C.</h3>
-            <h4>Help Desk & Operations · Lima, Perú</h4>
-            <ul>
-                <li>Logistical support and satellite tracking for cargo transportation units.</li>
-                <li>Created daily tracking reports and coordinated real-time support for drivers.</li>
-            </ul>
-        </div>
-
-        <div data-date="Venezuela">
-            <div class="vtimeline-date">Venezuela</div>
-            <h3>ETC Vicente Sucre y Urbaneja</h3>
-            <h4>Computer Science Teacher</h4>
-            <ul>
-                <li>Taught programming languages, databases, software development, and computer security.</li>
-            </ul>
-        </div>
-
-    </div>
-</div>
-
-<!-- ─── EDUCATION ─────────────────────────────────────────── -->
-<div id="education">
-    <h2 class="heading">Education</h2>
-
-    <div class="education-block">
-        <h3>Universidad de Oriente — Venezuela</h3>
-        <span class="education-date">2004 – 2014</span>
-        <h4>Bachelor of Science in Computer Science</h4>
-        <p>Comprehensive program covering algorithms, data structures, databases, software engineering, computer networks, and systems analysis. Strong mathematical foundation in models and algorithms.</p>
-    </div>
-
-    <div class="education-block">
-        <h3>EFSet English Certificate</h3>
-        <span class="education-date">Certified</span>
-        <h4>English B2 — Upper Intermediate</h4>
-        <p>Certified B2 level. Comfortable working in English-speaking teams, reading technical documentation, and participating in code reviews and meetings in English.</p>
-    </div>
-
-</div>
-
-<!-- ─── PROJECTS ──────────────────────────────────────────── -->
-<div id="projects">
-    <h2 class="heading">Projects</h2>
-
-    <div class="projects-grid">
-
-        <div class="project-card">
-            <div class="card-icon">🔐</div>
-            <h3>Professional Django API Template</h3>
-            <div class="card-subtitle">100% Test Coverage · Production Ready</div>
-            <p>Production-ready, reusable template for secure backend APIs. JWT authentication with refresh token rotation, role-based permissions (admin/staff/client), rate limiting, and a fully containerized setup. 60+ tests including integration coverage for auth flows and permissions.</p>
-            <div class="card-tags">
-                <span class="card-tag">Django</span>
-                <span class="card-tag">DRF</span>
-                <span class="card-tag">Docker</span>
-                <span class="card-tag">JWT</span>
-                <span class="card-tag">PostgreSQL</span>
-                <span class="card-tag">Pytest</span>
-                <span class="card-tag">Factory Boy</span>
-            </div>
-            <a href="https://github.com/Sublian/django-docker-postgres_basic" class="card-link" target="_blank">View Repository →</a>
-        </div>
-
-        <div class="project-card">
-            <div class="card-icon">🧠</div>
-            <h3>Background Task Processor</h3>
-            <div class="card-subtitle">Django · Celery · Redis · Odoo-inspired</div>
-            <p>Backend service for asynchronous file processing (CSV/Excel) with Celery and Redis. Handles long-running tasks, decouples user requests from heavy processing, and exposes a dashboard for upload status and historical task tracking.</p>
-            <div class="card-tags">
-                <span class="card-tag">Django</span>
-                <span class="card-tag">Celery</span>
-                <span class="card-tag">Redis</span>
-                <span class="card-tag">PostgreSQL</span>
-                <span class="card-tag">Pandas</span>
-            </div>
-            <a href="https://github.com/Sublian/django_celery" class="card-link" target="_blank">View Repository →</a>
-        </div>
-
-        <div class="project-card">
-            <div class="card-icon">🏥</div>
-            <h3>Hospital Records System</h3>
-            <div class="card-subtitle">FastAPI · ~1k records/day</div>
-            <p>Backend for medical data management with FastAPI and Docker, handling approximately 1,000 new records per day. Secure access control, structured data workflows, and a Jinja2-based UI layer.</p>
-            <div class="card-tags">
-                <span class="card-tag">FastAPI</span>
-                <span class="card-tag">Docker</span>
-                <span class="card-tag">PostgreSQL</span>
-                <span class="card-tag">JWT</span>
-                <span class="card-tag">Jinja2</span>
+            <div class="about-right">
+                <p>I'm a <strong>Backend Python Engineer</strong> with 2+ years working on production systems, specializing in API design, process automation, and high-performance backend services using Django, FastAPI, Flask, and Odoo.</p>
+                <p>My focus is on building scalable, maintainable architectures. I enjoy tackling performance bottlenecks head-on — profiling with <code>cProfile</code>, tuning queries with <code>EXPLAIN ANALYZE</code>, and refactoring code to drive measurable improvements in critical paths.</p>
+                <p>I believe that clean code, strong test coverage, and proper observability are what separate a <em>working</em> system from a <em>reliable</em> one. I maintain 90%+ test coverage across my main repos, backed by automated CI/CD pipelines.</p>
+                <p>Currently migrating a legacy Odoo v13 system into DRF services, and deepening my expertise in microservices architecture and AWS fundamentals. I'm also an active contributor to <strong>python-docs-es</strong>, the official Spanish translation of Python docs.</p>
+                <p><strong>Languages:</strong> Spanish (Native) · English B2 (EFSet Certified) &nbsp;·&nbsp; <strong>Open to:</strong> Remote backend roles, Python infrastructure collaboration, mentorship.</p>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="project-card">
-            <div class="card-icon">💸</div>
-            <h3>Automated Payroll System</h3>
-            <div class="card-subtitle">Django · Pandas · NumPy</div>
-            <p>Redesign and full automation of complex payroll calculations: allowances, deductions, and tax processing. Significantly reduced manual errors and improved processing efficiency for HR workflows.</p>
-            <div class="card-tags">
-                <span class="card-tag">Django</span>
-                <span class="card-tag">Pandas</span>
-                <span class="card-tag">NumPy</span>
-                <span class="card-tag">PostgreSQL</span>
-                <span class="card-tag">Jinja2</span>
+<!-- EXPERIENCE -->
+<div id="experience" class="section section-alt">
+    <div class="container">
+        <h2 class="section-heading">Experience <span class="bar"></span></h2>
+        <div class="timeline">
+
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-date">2022 – Present · Lima, Perú</div>
+                <h3>Backend Python Developer</h3>
+                <h4>Production Systems · Backend Engineering</h4>
+                <ul>
+                    <li>Designed and maintained REST APIs with <strong>Django REST Framework</strong> and <strong>FastAPI</strong>, handling real-world traffic and SLA requirements.</li>
+                    <li>Delivered a <strong>45× performance improvement</strong> on a critical Odoo module — reduced processing time from 20+ hours to under 3 hours through profiling (<code>cProfile</code>), query refactors, and strategic indexing.</li>
+                    <li>Improved complex PostgreSQL query response times by <strong>300%</strong> on tables with 10,000+ records using <code>EXPLAIN ANALYZE</code> and query simplification.</li>
+                    <li>Built asynchronous background task systems with <strong>Celery + Redis</strong> for CSV/Excel processing, scheduled email delivery, and report generation.</li>
+                    <li>Architected an automated payroll processing system with <strong>Django + Pandas + NumPy</strong>, eliminating manual calculation errors.</li>
+                    <li>Implemented CI/CD pipelines with GitHub Actions and fully containerized services with Docker Compose.</li>
+                    <li>Leading incremental migration of legacy Odoo v13 modules into clean DRF services with well-defined API boundaries.</li>
+                </ul>
+                <div class="tl-tags">
+                    <span class="tl-tag">45× Odoo Optimization</span>
+                    <span class="tl-tag">300% Query Speedup</span>
+                    <span class="tl-tag">CI/CD</span>
+                    <span class="tl-tag">Docker</span>
+                    <span class="tl-tag">DRF · FastAPI</span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot" style="background:var(--muted);"></div>
+                <div class="tl-date">Previous · Lima, Perú</div>
+                <h3>Mi Beatriz S.A.C.</h3>
+                <h4>Help Desk & Logistics Operations</h4>
+                <ul>
+                    <li>Real-time satellite tracking of cargo transport units for high-value merchandise.</li>
+                    <li>Created daily tracking reports and coordinated operational support for drivers.</li>
+                </ul>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot" style="background:var(--muted);"></div>
+                <div class="tl-date">Venezuela</div>
+                <h3>ETC Vicente Sucre y Urbaneja</h3>
+                <h4>Computer Science Teacher</h4>
+                <ul>
+                    <li>Taught programming languages, databases, systems development, and software security.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- EDUCATION -->
+<div id="education" class="section">
+    <div class="container">
+        <h2 class="section-heading">Education <span class="bar"></span></h2>
+        <div class="edu-grid">
+            <div class="edu-card">
+                <h3>Universidad de Oriente</h3>
+                <span class="edu-date">2004 – 2014 · Venezuela</span>
+                <h4>B.Sc. in Computer Science</h4>
+                <p>Algorithms, data structures, software engineering, databases, computer networks, and mathematical modeling. Strong foundation for system design and performance analysis.</p>
+            </div>
+            <div class="edu-card">
+                <h3>EFSet English Certificate</h3>
+                <span class="edu-date">Certified</span>
+                <h4>English B2 — Upper Intermediate</h4>
+                <p>Comfortable in English-speaking teams, reading technical docs, participating in code reviews, and written/verbal communication in international environments.</p>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="project-card">
-            <div class="card-icon">📧</div>
-            <h3>Daily English Phrases Mailer</h3>
-            <div class="card-subtitle">Flask · Full-Stack · Live Demo</div>
-            <p>Full-stack web app for automated daily email delivery. Multi-role accounts (free/premium), email confirmation, personalized admin dashboard, and a complete mailing workflow with retries and scheduling. Deployed to production.</p>
-            <div class="card-tags">
-                <span class="card-tag">Flask</span>
-                <span class="card-tag">MySQL</span>
-                <span class="card-tag">JWT</span>
-                <span class="card-tag">SMTP</span>
-                <span class="card-tag">Bootstrap</span>
-                <span class="card-tag">Cron</span>
+<!-- PROJECTS -->
+<div id="projects" class="section section-dark">
+    <div class="container">
+        <h2 class="section-heading">Projects <span class="bar" style="background:var(--green);"></span></h2>
+        <div class="projects-grid">
+
+            <div class="proj-card featured">
+                <div class="proj-icon">🔐</div>
+                <h3>Professional Django API Template</h3>
+                <div class="proj-sub">100% Test Coverage · Production Ready · Reference Architecture</div>
+                <div class="proj-body">
+                    <p>Production-ready, reusable template for secure backend APIs. JWT authentication with refresh token rotation, role-based permissions (admin/staff/client), rate limiting, and fully containerized with Docker. Built as a foundation for SaaS products, mobile backends, or microservices.</p>
+                    <div>
+                        <p style="margin-bottom:.7rem;">Achieved 100% test coverage with 60+ tests including integration suites for auth flows, endpoint coverage, and permission scenarios. Factory Boy–based test data with advanced mocking patterns.</p>
+                        <div class="proj-tags">
+                            <span class="proj-tag">Django</span><span class="proj-tag">DRF</span>
+                            <span class="proj-tag">Docker</span><span class="proj-tag">JWT</span>
+                            <span class="proj-tag">PostgreSQL</span><span class="proj-tag">Pytest</span>
+                            <span class="proj-tag">Factory Boy</span><span class="proj-tag">GitHub Actions</span>
+                        </div>
+                        <div class="proj-links" style="margin-top:.7rem;">
+                            <a href="https://github.com/Sublian/django-docker-postgres_basic" class="proj-link" target="_blank">View Repository →</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <a href="https://github.com/Sublian/Daily_English_Phrases" class="card-link" target="_blank">Repository →</a>
-            <a href="https://subliandev.pythonanywhere.com/" class="card-link" target="_blank">Live Demo →</a>
-        </div>
 
-        <div class="project-card">
-            <div class="card-icon">🧪</div>
-            <h3>Pytest Learning Lab</h3>
-            <div class="card-subtitle">Advanced Testing Patterns · Living KB</div>
-            <p>Hands-on repository documenting deep-dive testing patterns: reusable fixtures, parametrized tests, and robust mocking of external APIs and services. Uses a modern <code>uv</code>-based environment. Serves as a living knowledge base for professional QA practices.</p>
-            <div class="card-tags">
-                <span class="card-tag">Pytest</span>
-                <span class="card-tag">Mocking</span>
-                <span class="card-tag">Fixtures</span>
-                <span class="card-tag">Parametrize</span>
-                <span class="card-tag">uv</span>
+            <div class="proj-card">
+                <div class="proj-icon">🧵</div>
+                <h3>Background Task Processor</h3>
+                <div class="proj-sub">Django · Celery · Redis</div>
+                <p>Async file processing (CSV/Excel) with Celery and Redis. Decouples requests from heavy jobs, with status dashboard for upload history and task tracking. Production-style retry patterns.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Django</span><span class="proj-tag">Celery</span>
+                    <span class="proj-tag">Redis</span><span class="proj-tag">Pandas</span>
+                </div>
+                <div class="proj-links">
+                    <a href="https://github.com/Sublian/django_celery" class="proj-link" target="_blank">View Repository →</a>
+                </div>
             </div>
-            <a href="https://github.com/Sublian/pytest-learning-lab" class="card-link" target="_blank">View Repository →</a>
-        </div>
 
-    </div>
-</div>
+            <div class="proj-card">
+                <div class="proj-icon">🏥</div>
+                <h3>Hospital Records System</h3>
+                <div class="proj-sub">FastAPI · ~1k records/day</div>
+                <p>Medical data management backend handling ~1,000 new records/day. Secure JWT access control, structured data workflows, and Jinja2 UI layer.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">FastAPI</span><span class="proj-tag">Docker</span>
+                    <span class="proj-tag">PostgreSQL</span><span class="proj-tag">JWT</span>
+                </div>
+            </div>
 
-<!-- ─── ACHIEVEMENTS ───────────────────────────────────────── -->
-<div id="achievements">
-    <h2 class="heading">Key Metrics</h2>
+            <div class="proj-card">
+                <div class="proj-icon">💸</div>
+                <h3>Automated Payroll System</h3>
+                <div class="proj-sub">Django · Pandas · NumPy</div>
+                <p>Full automation of complex payroll: allowances, deductions, tax processing. Eliminated manual errors and dramatically improved HR processing efficiency.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Django</span><span class="proj-tag">Pandas</span>
+                    <span class="proj-tag">NumPy</span><span class="proj-tag">PostgreSQL</span>
+                </div>
+            </div>
 
-    <div class="achievements-grid">
-        <div class="achievement-card">
-            <div class="achievement-number">45×</div>
-            <h4>Legacy System Performance</h4>
-            <p>Reduced a critical Odoo module's processing time from 20+ hours to under 3 hours — through systematic profiling, query refactors, and indexing.</p>
-        </div>
-        <div class="achievement-card">
-            <div class="achievement-number">300%</div>
-            <h4>Database Query Speed</h4>
-            <p>Improved complex query response times on tables with 10k+ records using <code>EXPLAIN ANALYZE</code>, strategic indexing, and query simplification.</p>
-        </div>
-        <div class="achievement-card">
-            <div class="achievement-number">100%</div>
-            <h4>Test Coverage</h4>
-            <p>Achieved 100% test coverage on the Django API Template — 60+ tests covering endpoints, auth flows, and role-based permission scenarios.</p>
-        </div>
-        <div class="achievement-card">
-            <div class="achievement-number">90%+</div>
-            <h4>Coverage Standard</h4>
-            <p>Maintains 90%+ test coverage across main repositories, backed by automated CI/CD quality checks on every push.</p>
-        </div>
-    </div>
-</div>
+            <div class="proj-card">
+                <div class="proj-icon">📧</div>
+                <h3>Daily English Phrases Mailer</h3>
+                <div class="proj-sub">Flask · Full-Stack · Live in Production</div>
+                <p>Automated daily email delivery with multi-role accounts (free/premium), email confirmation, admin dashboard, retries, and cron scheduling. Deployed to production.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Flask</span><span class="proj-tag">MySQL</span>
+                    <span class="proj-tag">SMTP</span><span class="proj-tag">Bootstrap</span>
+                </div>
+                <div class="proj-links">
+                    <a href="https://github.com/Sublian/Daily_English_Phrases" class="proj-link" target="_blank">Repo →</a>
+                    <a href="https://subliandev.pythonanywhere.com/" class="proj-link" target="_blank">Live Demo →</a>
+                </div>
+            </div>
 
-<!-- ─── SKILLS ─────────────────────────────────────────────── -->
-<div id="skills">
-    <h2 class="heading">Skills</h2>
+            <div class="proj-card">
+                <div class="proj-icon">🧪</div>
+                <h3>Pytest Learning Lab</h3>
+                <div class="proj-sub">Advanced Testing · Living Knowledge Base</div>
+                <p>Deep-dive into professional testing: reusable fixtures, parametrized tests, mocking of HTTP/email services. Modern <code style="background:rgba(255,255,255,.06);padding:.1rem .3rem;border-radius:2px;font-family:var(--mono);">uv</code>-based environment.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Pytest</span><span class="proj-tag">Mocking</span>
+                    <span class="proj-tag">Fixtures</span><span class="proj-tag">uv</span>
+                </div>
+                <div class="proj-links">
+                    <a href="https://github.com/Sublian/pytest-learning-lab" class="proj-link" target="_blank">View Repository →</a>
+                </div>
+            </div>
 
-    <div class="skills-grid">
-        <div class="skill-group">
-            <h4>Backend & Frameworks</h4>
-            <ul>
-                <li>Python (Advanced)</li>
-                <li>Django · Django REST Framework</li>
-                <li>FastAPI</li>
-                <li>Flask</li>
-                <li>Odoo (v13/v16)</li>
-                <li>Celery</li>
-            </ul>
-        </div>
-
-        <div class="skill-group">
-            <h4>Data & Databases</h4>
-            <ul>
-                <li>PostgreSQL (Advanced)</li>
-                <li>MySQL</li>
-                <li>MongoDB</li>
-                <li>Redis (Queue & Cache)</li>
-                <li>Pandas · NumPy</li>
-                <li>Query Optimization</li>
-            </ul>
-        </div>
-
-        <div class="skill-group">
-            <h4>Testing & Quality</h4>
-            <ul>
-                <li>Pytest (Advanced)</li>
-                <li>Factory Boy</li>
-                <li>Mocking · Parametrize</li>
-                <li>TDD / BDD</li>
-                <li>Coverage Analysis</li>
-                <li>Swagger / OpenAPI</li>
-            </ul>
-        </div>
-
-        <div class="skill-group">
-            <h4>DevOps & Tooling</h4>
-            <ul>
-                <li>Docker · Docker Compose</li>
-                <li>GitHub Actions (CI/CD)</li>
-                <li>Linux</li>
-                <li>Git</li>
-                <li>cProfile · SnakeViz</li>
-                <li>AWS (in progress)</li>
-            </ul>
-        </div>
-
-        <div class="skill-group">
-            <h4>Architecture</h4>
-            <ul>
-                <li>REST API Design</li>
-                <li>JWT Authentication</li>
-                <li>Background Task Systems</li>
-                <li>Service Layer Patterns</li>
-                <li>Microservices (learning)</li>
-                <li>Design Patterns</li>
-            </ul>
-        </div>
-
-        <div class="skill-group">
-            <h4>Languages & Community</h4>
-            <ul>
-                <li>Spanish (Native)</li>
-                <li>English (B2 Certified)</li>
-                <li>python-docs-es Contributor</li>
-                <li>Open Source Contributor</li>
-            </ul>
         </div>
     </div>
 </div>
 
-<!-- ─── CONTACT ────────────────────────────────────────────── -->
-<div id="contact">
-    <h2 class="heading">Let's Connect</h2>
-    <p>Open to remote backend roles, collaboration on Python infrastructure projects, and mentorship opportunities.</p>
-
-    <div class="contact-links">
-        <a href="mailto:subliandev@gmail.com" class="btn-rounded-white">
-            <i class="fa fa-envelope"></i> subliandev@gmail.com
-        </a>
-        <a href="https://github.com/Sublian" class="btn-rounded-white" target="_blank">
-            <i class="fa fa-github"></i> GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/luisangelgp/" class="btn-rounded-white" target="_blank">
-            <i class="fa fa-linkedin"></i> LinkedIn
-        </a>
+<!-- METRICS -->
+<div id="metrics" class="section section-alt">
+    <div class="container">
+        <h2 class="section-heading">Key Metrics <span class="bar"></span></h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-n">45×</div>
+                <h4>Legacy System Optimization</h4>
+                <p>Reduced a critical Odoo module from 20+ hours to under 3 hours via profiling, query refactors, and indexing.</p>
+            </div>
+            <div class="metric-card">
+                <div class="metric-n">300%</div>
+                <h4>Database Query Speed</h4>
+                <p>Improved response times on 10k+ record tables using EXPLAIN ANALYZE and strategic indexing.</p>
+            </div>
+            <div class="metric-card">
+                <div class="metric-n">100%</div>
+                <h4>Test Coverage Achieved</h4>
+                <p>Django API Template: 60+ tests covering endpoints, auth flows, and role-based permissions.</p>
+            </div>
+            <div class="metric-card">
+                <div class="metric-n">90%+</div>
+                <h4>Coverage Standard</h4>
+                <p>Maintains 90%+ test coverage across main repos with automated CI/CD quality gates on every push.</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<!-- SKILLS -->
+<div id="skills" class="section">
+    <div class="container">
+        <h2 class="section-heading">Skills <span class="bar"></span></h2>
+        <div class="skills-grid">
+            <div class="skill-group">
+                <h4>Backend & Frameworks</h4>
+                <ul>
+                    <li>Python (Advanced)</li>
+                    <li>Django · Django REST Framework</li>
+                    <li>FastAPI</li>
+                    <li>Flask</li>
+                    <li>Odoo (v13 / v16)</li>
+                    <li>Celery</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h4>Data & Databases</h4>
+                <ul>
+                    <li>PostgreSQL (Advanced)</li>
+                    <li>MySQL · MongoDB</li>
+                    <li>Redis (Queue & Cache)</li>
+                    <li>Pandas · NumPy</li>
+                    <li>Query Optimization</li>
+                    <li>EXPLAIN ANALYZE</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h4>Testing & Quality</h4>
+                <ul>
+                    <li>Pytest (Advanced)</li>
+                    <li>Factory Boy · Mocking</li>
+                    <li>TDD / Coverage Analysis</li>
+                    <li>Swagger / OpenAPI</li>
+                    <li>Integration Testing</li>
+                    <li>cProfile · SnakeViz</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h4>DevOps & Tooling</h4>
+                <ul>
+                    <li>Docker · Docker Compose</li>
+                    <li>GitHub Actions (CI/CD)</li>
+                    <li>Linux</li>
+                    <li>Git</li>
+                    <li>AWS (in progress)</li>
+                    <li>uv (Python packaging)</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h4>Architecture & Patterns</h4>
+                <ul>
+                    <li>REST API Design</li>
+                    <li>JWT Authentication</li>
+                    <li>Background Task Systems</li>
+                    <li>Service Layer Patterns</li>
+                    <li>Factory · Strategy patterns</li>
+                    <li>Microservices (learning)</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h4>Languages & Community</h4>
+                <ul>
+                    <li>Spanish (Native)</li>
+                    <li>English (B2 EFSet Certified)</li>
+                    <li>python-docs-es Contributor</li>
+                    <li>Open Source Contributor</li>
+                    <li>Structured public upskilling</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section section-darker">
+    <div class="container">
+        <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
+        <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
+        <div class="contact-btns">
+            <a href="mailto:subliandev@gmail.com" class="btn-primary">
+                <i class="fa fa-envelope"></i> subliandev@gmail.com
+            </a>
+            <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
+                <i class="fa fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/luisangelgp/" class="btn-ghost" target="_blank">
+                <i class="fa fa-linkedin"></i> LinkedIn
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-    <p>© 2025 Luis Gonzalez · Backend Python Engineer</p>
+    <p>© 2025 Luis Gonzalez · Backend Python Engineer · Lima, Perú</p>
     <ul>
-        <li>
-            <a href="https://github.com/Sublian" target="_blank">
-                <i class="fa fa-github" aria-hidden="true"></i>
-            </a>
-        </li>
-        <li>
-            <a href="https://www.linkedin.com/in/luisangelgp/" target="_blank">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-            </a>
-        </li>
-        <li>
-            <a href="mailto:subliandev@gmail.com">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-            </a>
-        </li>
+        <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
     </ul>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
-
 <script>
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
-            const target = document.querySelector(a.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
         });
     });
 </script>
-
 </body>
 </html>
