@@ -46,17 +46,50 @@
         height: 48px;
         display: flex; align-items: center;
     }
-    header ul {
+    /* Desktop nav */
+    #nav-menu {
         display: flex; gap: 0; width: 100%;
         justify-content: flex-end; padding: 0 2rem;
+        list-style: none;
     }
-    header ul li a {
+    #nav-menu li a {
         font-family: var(--mono); font-size: .68rem;
         letter-spacing: .1em; text-transform: uppercase;
         color: var(--muted); padding: .3rem .8rem;
+        transition: color .15s; display: block;
+    }
+    #nav-menu li a:hover { color: var(--accent); opacity: 1; }
+
+    /* Hamburger button — hidden on desktop */
+    #nav-toggle {
+        display: none;
+        background: none; border: none; cursor: pointer;
+        padding: .4rem .8rem; margin-left: auto;
+        flex-direction: column; gap: 5px;
+    }
+    #nav-toggle span {
+        display: block; width: 22px; height: 2px;
+        background: var(--muted); border-radius: 2px;
+        transition: all .2s;
+    }
+    /* Mobile drawer */
+    #nav-drawer {
+        display: none;
+        position: fixed; top: 48px; left: 0; right: 0; z-index: 199;
+        background: rgba(246,244,240,.98);
+        border-bottom: 1px solid var(--mid);
+        padding: .5rem 0 .8rem;
+        list-style: none;
+    }
+    #nav-drawer.open { display: block; }
+    #nav-drawer li a {
+        display: block;
+        font-family: var(--mono); font-size: .72rem;
+        letter-spacing: .1em; text-transform: uppercase;
+        color: var(--muted); padding: .55rem 1.5rem;
         transition: color .15s;
     }
-    header ul li a:hover { color: var(--accent); opacity: 1; }
+    #nav-drawer li a:hover { color: var(--accent); opacity: 1; }
 
     /* ── HERO ────────────────────────────────────── */
     #lead {
@@ -85,7 +118,7 @@
     }
     #lead-content {
         position: relative; z-index: 1;
-        max-width: 1100px; margin: 0 auto; padding: 0 4rem;
+        max-width: 860px; margin: 0 auto; padding: 0 4rem;
         width: 100%;
     }
     .lead-eyebrow {
@@ -360,29 +393,44 @@
     footer ul li a { color: rgba(237,234,228,.3); font-size: 1rem; transition: color .2s; }
     footer ul li a:hover { color: var(--green); opacity: 1; }
 
-    /* ── RESPONSIVE ──────────────────────────────── */
-    @media (max-width: 900px) {
+    
+    /* ── SCROLL OFFSET FIX (fixed header compensation) ── */
+    [id] { scroll-margin-top: 56px; }
+
+    /* Desktop: remove featured span so grid is balanced 3-col */
+    @media (min-width: 901px) {
+        .proj-card.featured { grid-column: span 1 !important; }
+        .proj-card.featured .proj-body { grid-template-columns: 1fr !important; }
+        /* Show first project larger only on very wide screens */
+    }
+
+    @media (max-width: 600px) {
+        #nav-menu { display: none !important; }
+        #nav-toggle { display: flex !important; }
+        #lead-content { padding: 0 1.5rem; }
+        .container { padding: 0 1.2rem; }
+        .section { padding: 52px 0; }
+        .about-layout { grid-template-columns: 1fr; gap: 1.4rem; }
+        .projects-grid { grid-template-columns: 1fr; }
+        .proj-card.featured { grid-column: span 1; }
+        .proj-card.featured .proj-body { grid-template-columns: 1fr; }
+        .projects-grid .proj-card:last-child:nth-child(3n+1) { max-width: 100%; grid-column: 1; }
+        .metrics-grid { grid-template-columns: 1fr 1fr; }
+        .skills-grid { grid-template-columns: 1fr; }
+        .stats-row { grid-template-columns: repeat(2, 1fr); }
+        .edu-grid { grid-template-columns: 1fr; }
+        [id] { scroll-margin-top: 56px; }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+        #nav-menu { display: none !important; }
+        #nav-toggle { display: flex !important; }
         .about-layout { grid-template-columns: 1fr; gap: 2rem; }
         .projects-grid { grid-template-columns: 1fr 1fr; }
         .proj-card.featured { grid-column: span 2; }
-        .proj-card.featured .proj-body { grid-template-columns: 1fr; }
         .metrics-grid { grid-template-columns: repeat(2, 1fr); }
         .skills-grid { grid-template-columns: repeat(2, 1fr); }
         .edu-grid { grid-template-columns: 1fr; }
     }
-    @media (max-width: 600px) {
-        #lead-content { padding: 0 1.5rem; }
-        header ul { padding: 0 .6rem; }
-        header ul li a { padding: .3rem .35rem; font-size: .59rem; }
-        .container { padding: 0 1.2rem; }
-        .section { padding: 52px 0; }
-        .projects-grid { grid-template-columns: 1fr; }
-        .proj-card.featured { grid-column: span 1; }
-        .metrics-grid { grid-template-columns: 1fr 1fr; }
-        .skills-grid { grid-template-columns: 1fr; }
-        .stats-row { grid-template-columns: repeat(2, 1fr); }
-    }
-
     /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(18px); }
@@ -399,7 +447,7 @@
 
 <!-- HEADER -->
 <header>
-    <ul>
+    <ul id="nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
@@ -408,7 +456,20 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
+    <button id="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<!-- Mobile drawer -->
+<ul id="nav-drawer">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#metrics">Metrics</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+</ul>
 
 <!-- HERO -->
 <div id="lead">
@@ -451,8 +512,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="https://subliandev.pythonanywhere.com/" class="proj-link" target="_blank">Live Demo →</a>
-                    
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="403335222c29212e24253600272d21292c6e232f2d">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -868,7 +928,7 @@
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
             <a href="/cdn-cgi/l/email-protection#e09395828c89818e848596a0878d81898cce838f8d" class="btn-primary">
-                </span>
+                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="295a5c4b454048474d4c5f694e44484045074a4644">[email&#160;protected]</span>
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
