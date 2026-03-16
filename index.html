@@ -431,6 +431,139 @@
         .skills-grid { grid-template-columns: repeat(2, 1fr); }
         .edu-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── CASE STUDIES ────────────────────────────── */
+    #case-studies { background: var(--paper); }
+
+    .cs-card {
+        border: 1px solid var(--mid);
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 1.6rem;
+    }
+    .cs-card:last-child { margin-bottom: 0; }
+
+    .cs-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1.2rem;
+        padding: 1.4rem 2rem;
+        background: var(--mid);
+        cursor: pointer;
+        user-select: none;
+        transition: background .15s;
+    }
+    .cs-header:hover { background: #d8d3cc; }
+
+    .cs-icon { font-size: 1.5rem; }
+
+    .cs-title-block h3 {
+        font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
+        color: var(--ink); margin-bottom: .15rem;
+    }
+    .cs-title-block .cs-meta {
+        font-family: var(--mono); font-size: .62rem;
+        color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .cs-toggle {
+        font-family: var(--mono); font-size: .7rem;
+        color: var(--muted); letter-spacing: .08em;
+        display: flex; align-items: center; gap: .4rem;
+        white-space: nowrap;
+    }
+    .cs-toggle .arrow {
+        display: inline-block; transition: transform .25s;
+        font-size: .8rem;
+    }
+    .cs-card.open .cs-toggle .arrow { transform: rotate(180deg); }
+
+    .cs-body {
+        display: none;
+        padding: 2rem;
+        border-top: 1px solid var(--mid);
+    }
+    .cs-card.open .cs-body { display: block; }
+
+    /* Inside body */
+    .cs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 1.8rem;
+    }
+    .cs-block h4 {
+        font-family: var(--mono); font-size: .65rem; letter-spacing: .12em;
+        text-transform: uppercase; color: var(--accent);
+        margin-bottom: .7rem; padding-bottom: .35rem;
+        border-bottom: 1px solid var(--accent);
+    }
+    .cs-block p { font-size: .9rem; color: #424955; margin-bottom: .6rem; }
+    .cs-block p:last-child { margin-bottom: 0; }
+    .cs-block ul { list-style: disc; padding-left: 1.1rem; }
+    .cs-block li { font-size: .88rem; color: #424955; margin-bottom: .35rem; line-height: 1.55; }
+    .cs-block li strong { color: var(--ink); }
+    .cs-block code {
+        font-family: var(--mono); font-size: .78rem;
+        background: var(--mid); padding: .1rem .35rem; border-radius: 3px;
+        color: var(--accent);
+    }
+
+    /* Before/After table */
+    .cs-table {
+        width: 100%; border-collapse: collapse;
+        margin-top: .8rem; font-size: .82rem;
+    }
+    .cs-table th {
+        font-family: var(--mono); font-size: .6rem; letter-spacing: .1em;
+        text-transform: uppercase; padding: .5rem .9rem;
+        background: var(--dark); color: var(--green);
+        text-align: left; border: 1px solid rgba(160,200,120,.12);
+    }
+    .cs-table td {
+        padding: .55rem .9rem; color: #424955;
+        border: 1px solid var(--mid); vertical-align: top;
+        line-height: 1.5;
+    }
+    .cs-table tr:nth-child(even) td { background: rgba(0,0,0,.02); }
+    .cs-table td:first-child { font-weight: 500; color: var(--ink); width: 28%; }
+    .cs-table .val-before { color: var(--muted); }
+    .cs-table .val-after { color: #2e7d32; font-weight: 500; }
+
+    /* Impact pills row */
+    .cs-impacts {
+        display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem;
+    }
+    .cs-impact {
+        display: flex; flex-direction: column; align-items: center;
+        background: var(--dark); border-radius: 4px;
+        padding: .7rem 1.2rem; min-width: 110px;
+        border-top: 2px solid var(--accent);
+    }
+    .cs-impact .imp-n {
+        font-family: var(--serif); font-size: 1.6rem; font-weight: 700;
+        color: var(--green); line-height: 1;
+    }
+    .cs-impact .imp-l {
+        font-family: var(--mono); font-size: .58rem;
+        color: rgba(160,200,120,.55); text-transform: uppercase;
+        letter-spacing: .07em; margin-top: .2rem; text-align: center;
+    }
+
+    .cs-stack-row {
+        display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.2rem;
+    }
+
+    @media (max-width: 700px) {
+        .cs-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+        .cs-header { grid-template-columns: auto 1fr; }
+        .cs-toggle { display: none; }
+        .cs-header::after {
+            content: '▾'; font-size: .9rem; color: var(--muted);
+            grid-column: 2; justify-self: end;
+        }
+    }
     /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(18px); }
@@ -452,6 +585,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#case-studies">Cases</a></li>
         <li><a href="#metrics">Metrics</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -466,6 +600,7 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#case-studies">Cases</a></li>
     <li><a href="#metrics">Metrics</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -512,7 +647,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · subliandev@gmail.com</p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -575,7 +710,7 @@
                 <h4>Backend Engineering · Performance & Architecture</h4>
                 <ul>
                     <li>Led technical assessment and architectural planning for Odoo migration from <strong>v13 to v17</strong>, focusing on API compatibility and custom module refactoring to the latest framework standards.</li>
-                    <li>Designed high-throughput Odoo APIs applying <strong>Singleton and Strategy design patterns</strong> for modularity and scalability. Consolidated 6 fragmented external APIs into 2 major endpoints, drastically reducing integration complexity.</li>
+                    <li>Designed high-throughput Odoo APIs applying <strong>Singleton and Strategy design patterns</strong> for modularity and scalability. Consolidated 6 fragmented external APIs into 3 major endpoints, drastically reducing integration complexity.</li>
                     <li>Delivered <strong>80% performance improvement</strong> on critical invoicing workflows (60s → 8–15s) using PostgreSQL indexing, advanced profiling, and asynchronous worker queues.</li>
                     <li>Applied the <strong>Open/Closed Principle (OCP)</strong> to refactor monolithic Odoo functions into modular, single-responsibility components with intelligent dispatch routing for future extensibility.</li>
                 </ul>
@@ -818,6 +953,139 @@
     </div>
 </div>
 
+
+<!-- CASE STUDIES -->
+<div id="case-studies" class="section">
+    <div class="container">
+        <h2 class="section-heading">Case Studies <span class="bar"></span></h2>
+
+        <!-- EV Case Study -->
+        <div class="cs-card" id="cs-ev">
+            <div class="cs-header" onclick="toggleCS('cs-ev')">
+                <span class="cs-icon">🔐</span>
+                <div class="cs-title-block">
+                    <h3>Multi-Executive Governance &amp; Security</h3>
+                    <span class="cs-meta">Odoo · Security Framework · Fiberlux · 2024–2025</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+
+                <!-- Problem + Solution grid -->
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Odoo's standard security model restricts CRM and Sales document ownership to a single <strong>Salesperson</strong> field. At Fiberlux, multiple executives — Postventa, Fidelización, and others — needed to operate on the same customer account simultaneously.</p>
+                        <p>The result: critical <code>AccessError</code> blocks on every cross-team operation, invoicing bottlenecks, and manual admin intervention required every 2–4 hours to restore access.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Architectural Solution</h4>
+                        <p>Designed a <strong>Linked Executives (EV) governance engine</strong> that extends Odoo's security framework via <code>ir.rule</code> inheritance and dynamic relational logic — without forking the core.</p>
+                        <ul>
+                            <li><strong>Dynamic Security Bypass:</strong> Re-architected <code>Personal Orders</code> and <code>Personal Order Lines</code> base rules using dot-notation relational paths, enabling safe CRUD operations for secondary executives.</li>
+                            <li><strong>Context-Aware Approval Dispatch:</strong> Built a dispatcher inside <code>create_level_ids</code> that inspects the operating <code>uid</code> and routes approvals to the correct team category — bypassing the account owner's commercial hierarchy when the creator is an EV.</li>
+                            <li><strong>ORM Integrity Fix:</strong> Resolved <code>unlink</code> <code>AccessError</code> on order lines by bridging the relational domain: <code>order_id.partner_id.linked_executive_ids.user_id</code> — forcing an implicit JOIN through the contacts and EV tables at query time.</li>
+                            <li><strong>Auto-follower Integration:</strong> Wired EVs into Odoo's messaging engine as automatic Followers, guaranteeing full lifecycle visibility without manual subscriptions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deep Dive -->
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Key Engineering Decisions</h4>
+                    <ul>
+                        <li><strong>External ID Override:</strong> Instead of adding parallel rules (which stack with <code>AND</code> logic and amplify blocking), overwrote Odoo's native <code>sale.sale_order_personal_rule</code> external ID — injecting EV logic directly into the ORM security core, ensuring forward-compatibility with future Odoo upgrades.</li>
+                        <li><strong>Reverse Polish Notation Domain:</strong> Implemented a 4-condition domain in a single DB operation to evaluate access eligibility across 100k+ record tables with no measurable query overhead.</li>
+                        <li><strong>Strategy Pattern on Approvals:</strong> The dispatch logic isolates the "is this user an EV?" check from the approval routing logic — making the system extensible to new executive roles without modifying existing flows.</li>
+                        <li><strong>Dual Audit Trail:</strong> Every transaction records both <em>account owner</em> and <em>operating executive</em> independently, satisfying ISO/TIC compliance requirements for full traceability.</li>
+                    </ul>
+                </div>
+
+                <!-- Before / After table -->
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Before vs. After</h4>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Dimension</th>
+                                <th>Legacy (Standard Odoo)</th>
+                                <th>EV Model (Implemented)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ownership</td>
+                                <td class="val-before">Single salesperson</td>
+                                <td class="val-after">Owner + N linked executives</td>
+                            </tr>
+                            <tr>
+                                <td>Access Control</td>
+                                <td class="val-before">Hard block via <code>ir.rule</code></td>
+                                <td class="val-after">Dynamic access via relational domain</td>
+                            </tr>
+                            <tr>
+                                <td>Approval Routing</td>
+                                <td class="val-before">Linear → always to account owner's team</td>
+                                <td class="val-after">Branched → routes by creator's actual role</td>
+                            </tr>
+                            <tr>
+                                <td>Visibility</td>
+                                <td class="val-before">Manual follower subscription</td>
+                                <td class="val-after">Automatic on EV assignment</td>
+                            </tr>
+                            <tr>
+                                <td>Access Resolution</td>
+                                <td class="val-before">2–4 hours (manual by admin)</td>
+                                <td class="val-after">0 ms (fully automated)</td>
+                            </tr>
+                            <tr>
+                                <td>Audit Trail</td>
+                                <td class="val-before">Salesperson only</td>
+                                <td class="val-after">Owner + executor logged independently</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Impact metrics -->
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact">
+                            <span class="imp-n">100%</span>
+                            <span class="imp-l">Access errors eliminated</span>
+                        </div>
+                        <div class="cs-impact">
+                            <span class="imp-n">0 ms</span>
+                            <span class="imp-l">Access resolution time</span>
+                        </div>
+                        <div class="cs-impact">
+                            <span class="imp-n">N roles</span>
+                            <span class="imp-l">Multi-executive scalability</span>
+                        </div>
+                        <div class="cs-impact">
+                            <span class="imp-n">ISO/TIC</span>
+                            <span class="imp-l">Full audit compliance</span>
+                        </div>
+                    </div>
+                    <div class="cs-stack-row" style="margin-top:1.2rem;">
+                        <span class="proj-tag">Python · Odoo Framework</span>
+                        <span class="proj-tag">ir.rule · Record Rules</span>
+                        <span class="proj-tag">PostgreSQL Domain Force</span>
+                        <span class="proj-tag">XML Inheritance</span>
+                        <span class="proj-tag">ACL · Security Framework</span>
+                        <span class="proj-tag">Strategy Pattern</span>
+                        <span class="proj-tag">ORM Internals</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end cs-ev -->
+
+    </div>
+</div>
+
 <!-- METRICS -->
 <div id="metrics" class="section section-alt">
     <div class="container">
@@ -927,8 +1195,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="mailto:subliandev@gmail.com" class="btn-primary">
-                <i class="fa fa-envelope"></i> subliandev@gmail.com
+            <a href="/cdn-cgi/l/email-protection#45363027292c242b212033052228242c296b262a28" class="btn-primary">
+                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="05767067696c646b616073456268646c692b666a68">[email&#160;protected]</span>
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -945,9 +1213,3 @@
     <p>© 2025 Luis Gonzalez · Backend Python Engineer · Lima, Perú</p>
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
-        <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
-    </ul>
-</footer>
-
-<script src="https://cdnjs.cloudfla
