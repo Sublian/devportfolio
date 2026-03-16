@@ -647,7 +647,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="mailto:subliandev@gmail.com" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -696,7 +696,7 @@
                     <li>Delivered <strong>80% performance improvement</strong> on critical Odoo invoicing workflows (60s → 8–15s) via PostgreSQL indexing, advanced profiling, and async worker queue tuning.</li>
                     <li>Designed <strong>Multi-Executive Governance (EV) engine</strong> extending Odoo's <code>ir.rule</code> security framework — eliminated 100% of cross-team <code>AccessError</code> blocks, reducing access resolution from 2–4 hours to 0ms.</li>
                     <li>Consolidated 6 fragmented external APIs into 3 major endpoints applying <strong>Singleton and Strategy design patterns</strong>, reducing integration complexity significantly.</li>
-                    <li>Leading phased <strong>Odoo v13 → v17 migration</strong> strategy: extracting critical modules into Django microservices, resolving production deadlocks via worker/memory tuning, and maintaining a "Testodoo" validation environment.</li>
+                    <li>Leading phased <strong>Odoo v13 → Django migration</strong> strategy: extracting critical modules into Django microservices, resolving production deadlocks via worker/memory tuning, and maintaining a "Testodoo" validation environment.</li>
                     <li>Achieved <strong>100% test coverage</strong> on the base Django API repository; established SOLID principles and unit testing policy as architectural standards for the new ERP.</li>
                     <li>Built <strong>B2B Lead Generation agent</strong> using Python/BeautifulSoup/Pandas — scraping, RUC validation, sector classification, and automated data enrichment pipeline for the commercial team.</li>
                     <li>Mentored 3 programming interns (Andy, Abigail, Fernanda) on backend architecture, design patterns, and testing practices.</li>
@@ -1152,7 +1152,7 @@
                     </div>
                     <div class="cs-stack-row">
                         <span class="proj-tag">Python · Odoo v13</span>
-                        <span class="proj-tag">SFTP · Paramiko</span>
+                        <span class="proj-tag">SFTP · Paramiko Fabric</span>
                         <span class="proj-tag">Python Threading</span>
                         <span class="proj-tag">PostgreSQL · B-Tree Index</span>
                         <span class="proj-tag">Concurrency Control</span>
@@ -1167,7 +1167,7 @@
             <div class="cs-header">
                 <span class="cs-icon">🏗️</span>
                 <div class="cs-title-block">
-                    <h3>ERP Migration Strategy — Odoo v13 → v17</h3>
+                    <h3>ERP Migration Strategy — Odoo v13 → Django</h3>
                     <span class="cs-meta">Odoo · Django Microservices · Docker · Fiberlux · 2024–Present</span>
                 </div>
                 <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
@@ -1248,9 +1248,9 @@
                 <p>Reduced critical Odoo invoicing workflow from 60s to 8–15s via PostgreSQL indexing, profiling, and async worker queues. (Fiberlux)</p>
             </div>
             <div class="metric-card">
-                <div class="metric-n">6→3</div>
+                <div class="metric-n">6→2</div>
                 <h4>API Consolidation</h4>
-                <p>Consolidated 6 fragmented external APIs into 3 major endpoints, drastically reducing integration complexity. (Fiberlux)</p>
+                <p>Consolidated 6 fragmented external APIs into 2 major endpoints, drastically reducing integration complexity. (Fiberlux)</p>
             </div>
             <div class="metric-card">
                 <div class="metric-n">30%</div>
@@ -1341,8 +1341,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="/cdn-cgi/l/email-protection#7c0f091e10151d1218190a3c1b111d1510521f1311" class="btn-primary">
-                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="b4c7c1d6d8ddd5dad0d1c2f4d3d9d5ddd89ad7dbd9">[email&#160;protected]</span>
+            <a href="mailto:subliandev@gmail.com" class="btn-primary">
+                <i class="fa fa-envelope"></i> subliandev@gmail.com
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -1360,36 +1360,64 @@
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="/cdn-cgi/l/email-protection#463533242a2f272822233006212b272f2a6825292b"><i class="fa fa-envelope"></i></a></li>
+        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
     </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
-    // ── Case Study accordion ──────────────────────
-    document.querySelectorAll('.cs-header').forEach(function(header) {
-        header.addEventListener('click', function() {
-            var card = this.closest('.cs-card');
-            card.classList.toggle('open');
-        });
-    });
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ── Accordion ─────────────────────────────────
+    var headers = document.querySelectorAll('.cs-header');
+    for (var i = 0; i < headers.length; i++) {
+        (function(header) {
+            header.addEventListener('click', function(e) {
+                var el = e.target;
+                while (el && !el.classList.contains('cs-card')) {
+                    el = el.parentElement;
+                }
+                if (el) {
+                    el.classList.toggle('open');
+                    var arrow = el.querySelector('.arrow');
+                    if (arrow) arrow.textContent = el.classList.contains('open') ? '▴' : '▾';
+                }
+            });
+        })(headers[i]);
+    }
 
     // ── Hamburger nav ─────────────────────────────
     var toggle = document.getElementById('nav-toggle');
     var drawer = document.getElementById('nav-drawer');
     if (toggle && drawer) {
-        toggle.addEventListener('click', function() {
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             drawer.classList.toggle('open');
         });
         document.addEventListener('click', function(e) {
-            if (!toggle.contains(e.target) && !drawer.contains(e.target)) {
+            if (!drawer.contains(e.target) && !toggle.contains(e.target)) {
                 drawer.classList.remove('open');
             }
         });
     }
 
-    // ── Smooth scroll + close drawer on nav click ─
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-        a.addEventListener('click', function(e) {
-            var target = docum
+    // ── Smooth scroll ─────────────────────────────
+    var anchors = document.querySelectorAll('a[href^="#"]');
+    for (var j = 0; j < anchors.length; j++) {
+        (function(a) {
+            a.addEventListener('click', function(e) {
+                var target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if (drawer) drawer.classList.remove('open');
+                }
+            });
+        })(anchors[j]);
+    }
+
+});
+</script>
+</body>
+</html>
