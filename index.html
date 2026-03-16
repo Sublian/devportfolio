@@ -668,7 +668,7 @@
                 </div>
             </div>
             <div class="about-right">
-                <p>I'm a <strong>Backend Python Engineer</strong> with 2+ years of professional experience across healthcare and enterprise systems — currently at <strong>Fiberlux</strong>, where I work on Odoo development and leading a full ERM migration from Odoo to Django REST Framework.</p>
+                <p>I'm a <strong>Backend Python Engineer</strong> with 2+ years of professional experience across healthcare and enterprise systems — currently at <strong>Fiberlux</strong>, where I work on Odoo development and leading a full ERP migration from Odoo v13 to a Django-based microservices architecture.</p>
                 <p>My focus is on building scalable, maintainable architectures. I enjoy tackling performance bottlenecks head-on — profiling with <code>cProfile</code>, tuning queries with <code>EXPLAIN ANALYZE</code>, and applying design patterns (Singleton, Strategy, OCP) to turn monolithic code into modular, extensible systems.</p>
                 <p>At <strong>Clínica Santa Isabel</strong>, I built core healthcare systems including a Payroll module and an Electronic Health Records system using Django and FastAPI. I care deeply about test coverage, observability, and CI/CD practices that keep systems reliable in production.</p>
                 <p>Currently deepening expertise in microservices architecture and AWS fundamentals. Active contributor to <strong>python-docs-es</strong>, the official Spanish translation of Python documentation.</p>
@@ -684,102 +684,29 @@
         <h2 class="section-heading">Experience <span class="bar"></span></h2>
         <div class="timeline">
 
-            <!-- Fiberlux: Django Developer -->
+            <!-- Fiberlux -->
             <div class="tl-item">
                 <div class="tl-dot"></div>
-                <div class="tl-date">Dec 2024 – Present · 4 mos · Fiberlux · Full-time</div>
-                <h3>Django Developer</h3>
-                <h4>ERM · Odoo to Django Migration Project</h4>
+                <div class="tl-date">Apr 2, 2024 – Present · Fiberlux · Full-time · Lima, Perú</div>
+                <h3>Analista Programador</h3>
+                <h4>Backend Engineering · Odoo · Django · Performance & Architecture</h4>
                 <ul>
-                    <li>Leading the technical migration of a production ERM system from <strong>Odoo to Django REST Framework</strong>, re-architecting legacy modules into clean, API-first services.</li>
-                    <li>Defining migration strategy, API compatibility layers, and module boundaries to ensure zero data loss and minimal downtime during the transition.</li>
+                    <li>Built a <strong>Django-based Electronic Invoicing Engine</strong> replacing a slow Odoo process — delivering <strong>~170× throughput improvement</strong> (from ~2 min/invoice to 50 invoices in 35s) using async workers, SUNAT/Nubefact API integration, PDF+QR generation, and automatic email dispatch.</li>
+                    <li>Re-architected Five9 SFTP sync module from synchronous to <strong>multi-threaded async design</strong>, eliminating company-wide blocking during data loads and achieving <strong>30% reduction in production storage</strong> via configurable batch sanitization.</li>
+                    <li>Delivered <strong>80% performance improvement</strong> on critical Odoo invoicing workflows (60s → 8–15s) via PostgreSQL indexing, advanced profiling, and async worker queue tuning.</li>
+                    <li>Designed <strong>Multi-Executive Governance (EV) engine</strong> extending Odoo's <code>ir.rule</code> security framework — eliminated 100% of cross-team <code>AccessError</code> blocks, reducing access resolution from 2–4 hours to 0ms.</li>
+                    <li>Consolidated 6 fragmented external APIs into 3 major endpoints applying <strong>Singleton and Strategy design patterns</strong>, reducing integration complexity significantly.</li>
+                    <li>Leading phased <strong>Odoo v13 → v17 migration</strong> strategy: extracting critical modules into Django microservices, resolving production deadlocks via worker/memory tuning, and maintaining a "Testodoo" validation environment.</li>
+                    <li>Achieved <strong>100% test coverage</strong> on the base Django API repository; established SOLID principles and unit testing policy as architectural standards for the new ERP.</li>
+                    <li>Built <strong>B2B Lead Generation agent</strong> using Python/BeautifulSoup/Pandas — scraping, RUC validation, sector classification, and automated data enrichment pipeline for the commercial team.</li>
+                    <li>Mentored 3 programming interns (Andy, Abigail, Fernanda) on backend architecture, design patterns, and testing practices.</li>
                 </ul>
-                <div class="tl-tags">
-                    <span class="tl-tag">Python</span>
-                    <span class="tl-tag">Django REST Framework</span>
-                    <span class="tl-tag">Odoo Migration</span>
-                    <span class="tl-tag">API Design</span>
-                </div>
-            </div>
-
-            <!-- Fiberlux: Odoo Developer -->
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-date">Apr 2024 – Present · 1 yr · Fiberlux · Full-time</div>
-                <h3>Odoo Developer</h3>
-                <h4>Backend Engineering · Performance & Architecture</h4>
-                <ul>
-                    <li>Led technical assessment and architectural planning for Odoo migration from <strong>v13 to v17</strong>, focusing on API compatibility and custom module refactoring to the latest framework standards.</li>
-                    <li>Designed high-throughput Odoo APIs applying <strong>Singleton and Strategy design patterns</strong> for modularity and scalability. Consolidated 6 fragmented external APIs into 3 major endpoints, drastically reducing integration complexity.</li>
-                    <li>Delivered <strong>80% performance improvement</strong> on critical invoicing workflows (60s → 8–15s) using PostgreSQL indexing, advanced profiling, and asynchronous worker queues.</li>
-                    <li>Applied the <strong>Open/Closed Principle (OCP)</strong> to refactor monolithic Odoo functions into modular, single-responsibility components with intelligent dispatch routing for future extensibility.</li>
-                </ul>
-
-                <!-- Case Study 1: Electronic Invoicing -->
-                <div style="margin-top:1.1rem;padding:1.2rem 1.4rem;background:#1e2a1a;border:1px solid #4a7c3f;border-radius:5px;">
-                    <p style="font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#7dbf6a;margin-bottom:.7rem;">
-                        ▸ Case Study — Electronic Invoicing Engine (Django · SUNAT API)
-                    </p>
-                    <p style="font-size:.88rem;color:#c8d8c4;margin-bottom:.8rem;">
-                        Redesigned the entire electronic invoicing flow in Django, replacing a slow Odoo process (~2 min/invoice) with an async-first engine capable of generating <strong style="color:#e8f0e5;">50 PDF invoices with QR in ~35 seconds</strong> using 10 concurrent workers.
-                    </p>
-                    <ul style="padding-left:1.1rem;list-style:disc;">
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
-                            <strong style="color:#e8f0e5;">Data Pipeline:</strong> Orchestrated invoice data using <strong style="color:#e8f0e5;">Django ORM</strong> combined with multiple internal APIs, managing base tables (templates, sequences, series) via atomic transactions to guarantee data consistency.
-                        </li>
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
-                            <strong style="color:#e8f0e5;">Async/Sync Dual Mode:</strong> Engineered the SUNAT API integration to operate in <strong style="color:#e8f0e5;">async mode as primary</strong> with automatic synchronous fallback — ensuring delivery resilience under API instability.
-                        </li>
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
-                            <strong style="color:#e8f0e5;">Retry & Fault Tolerance:</strong> Implemented configurable retry logic with exponential backoff, recording both success and failure states to the DB for full auditability and compliance traceability.
-                        </li>
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
-                            <strong style="color:#e8f0e5;">PDF + QR Generation:</strong> Transformed SUNAT XML responses into signed PDF invoices with embedded QR codes, automatically dispatched to the customer and billing team via email.
-                        </li>
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:.4rem;">
-                            <strong style="color:#e8f0e5;">Quality Assurance:</strong> Entire integration validated with unit and integration test suites before production deployment — covering happy paths, API failures, and retry scenarios.
-                        </li>
-                        <li style="font-size:.88rem;color:#c8d8c4;margin-bottom:0;">
-                            <strong style="color:#e8f0e5;">Result:</strong> <code style="font-family:var(--mono);font-size:.8rem;background:rgba(255,255,255,.08);padding:.1rem .35rem;border-radius:3px;">~2 min/invoice in Odoo → 50 invoices in 35s in Django</code> — a <strong style="color:#a8e090;">~170× throughput improvement</strong>.
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Case Study 2: Five9 / SFTP -->
-                <div style="margin-top:1rem;padding:1.2rem 1.4rem;background:#1a1e2a;border:1px solid #3a4a7c;border-radius:5px;">
-                    <p style="font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#7a9edf;margin-bottom:.7rem;">
-                        ▸ Case Study — High-Availability Sync Architecture (Odoo 13 · Five9 SFTP)
-                    </p>
-                    <p style="font-size:.88rem;color:#c4cce0;margin-bottom:.8rem;">
-                        Re-engineered a custom Odoo module that syncs telephony data (recordings, transcripts, reports) from a <strong style="color:#e5eaf5;">Five9</strong> SFTP server. The original synchronous design was blocking operations company-wide during large data loads.
-                    </p>
-                    <ul style="padding-left:1.1rem;list-style:disc;">
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
-                            <strong style="color:#e5eaf5;">Decoupled Architecture:</strong> Migrated business logic to independent Python threads so the server processes SFTP data in the background — achieving <em>zero perceived latency</em> for end users during mass synchronizations.
-                        </li>
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
-                            <strong style="color:#e5eaf5;">Concurrency Control:</strong> Implemented indexed boolean flags in the DB to manage thread state and prevent race conditions during concurrent sync operations.
-                        </li>
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
-                            <strong style="color:#e5eaf5;">SQL Optimization:</strong> Reduced query cost on 40k+ record detail tables using B-Tree indexes on <code style="font-family:var(--mono);font-size:.78rem;background:rgba(255,255,255,.06);padding:.1rem .3rem;border-radius:2px;">Many2one</code> foreign keys and PostgreSQL views for high-performance reporting.
-                        </li>
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
-                            <strong style="color:#e5eaf5;">Storage & Batch Strategy:</strong> Designed a configurable auto-sanitization system (<code style="font-family:var(--mono);font-size:.78rem;background:rgba(255,255,255,.06);padding:.1rem .3rem;border-radius:2px;">days_to_sanitize</code>) with batch processing — achieving a <strong style="color:#90b8e0;">30% reduction in production storage</strong>.
-                        </li>
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:.4rem;">
-                            <strong style="color:#e5eaf5;">Robust SFTP Integration:</strong> Re-engineered Paramiko-based client with hierarchical exception handling and automatic connection retry logic, ensuring resilience against network failures.
-                        </li>
-                        <li style="font-size:.88rem;color:#c4cce0;margin-bottom:0;">
-                            <strong style="color:#e5eaf5;">Forward-looking Design:</strong> System architected to handle projected data growth through 2026, with scalability built into the batch and threading model from the ground up.
-                        </li>
-                    </ul>
-                </div>
 
                 <div class="tl-tags" style="margin-top:.9rem;">
                     <span class="tl-tag">~170× Invoice Throughput</span>
                     <span class="tl-tag">SUNAT API · e-Invoicing</span>
                     <span class="tl-tag">Async/Sync Fallback</span>
-                    <span class="tl-tag">Odoo v13→v17</span>
+                    <span class="tl-tag">Odoo v13→Django</span>
                     <span class="tl-tag">Python Threading</span>
                     <span class="tl-tag">SFTP · Paramiko</span>
                     <span class="tl-tag">PostgreSQL · B-Tree Index</span>
@@ -792,20 +719,35 @@
             <div class="tl-item">
                 <div class="tl-dot"></div>
                 <div class="tl-date">Dec 2023 – Mar 2025 · 1 yr 4 mos · Clínica Santa Isabel S.A.C. · On-site · Lima, Perú</div>
-                <h3>Python Developer</h3>
-                <h4>Full-time · Django · FastAPI · Healthcare Systems</h4>
+                <h3>Backend Developer &amp; Systems Analyst</h3>
+                <h4>Full-time · ERP &amp; Healthcare Systems · Django · FastAPI · Docker</h4>
+
+                <p style="font-size:.82rem;font-family:var(--mono);color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:.8rem 0 .5rem;">ISIS_CSI — Payroll &amp; HR System Reengineering</p>
                 <ul>
-                    <li>Served as primary Python Backend Developer, using <strong>Django</strong> for core application development and <strong>FastAPI</strong> for high-performance service endpoints.</li>
-                    <li>Engineered an internal <strong>Payroll module</strong> handling complex allowances, deductions, and tax calculations — eliminating manual errors and reducing processing time significantly.</li>
-                    <li>Built a robust <strong>Electronic Health Records (EHR)</strong> system ensuring data integrity, regulatory compliance, and handling ~1,000 new records per day.</li>
+                    <li>Refactored and improved calculation engines for <strong>Gratificaciones, CTS, Vacaciones and Liquidaciones</strong> — ensuring full compliance with Peruvian labor regulations (normativa laboral peruana).</li>
+                    <li>Designed and implemented the annual <strong>profit-sharing (utilidades) calculation process</strong> integrating <strong>Pandas</strong> for high-volume salary and worked-days data — reducing processing time and eliminating manual errors.</li>
+                    <li>Identified bottlenecks in complex payroll queries; applied <strong>strategic PostgreSQL indexes</strong> that significantly improved mass report generation performance.</li>
+                    <li>Refactored the <strong>biometric time-tracking and shift management system</strong> for clinical staff (physicians and nurses), handling the full complexity of rotating shifts and on-call schedules.</li>
+                    <li>Automated attendance data extraction and reporting for <strong>SUSALUD / SETIIPRES</strong> regulatory compliance (TuaSusalud), guaranteeing accurate declarations to Peru's healthcare supervisory bodies.</li>
                 </ul>
-                <div class="tl-tags">
-                    <span class="tl-tag">Python</span>
-                    <span class="tl-tag">Django</span>
-                    <span class="tl-tag">FastAPI</span>
-                    <span class="tl-tag">PostgreSQL</span>
-                    <span class="tl-tag">EHR System</span>
-                    <span class="tl-tag">Payroll</span>
+
+                <p style="font-size:.82rem;font-family:var(--mono);color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:.9rem 0 .5rem;">Hospital Management Web Ecosystem</p>
+                <ul>
+                    <li>Led creation and standardization of <strong>electronic clinical documents</strong> for Hospitalización, Emergencias, Quirófano, and Neonatología — fully replacing paper-based workflows with dynamic digital forms.</li>
+                    <li>Built backend services in <strong>FastAPI</strong> within a microservices architecture using <strong>Docker</strong>, ensuring high-speed response for critical clinical operations and ~1,000 new records per day.</li>
+                    <li>Standardized data capture across all clinical forms to ensure consistency for downstream <strong>clinical and administrative analytics</strong>.</li>
+                </ul>
+
+                <div class="tl-tags" style="margin-top:.8rem;">
+                    <span class="tl-tag">Python · Django</span>
+                    <span class="tl-tag">FastAPI · Microservices</span>
+                    <span class="tl-tag">Docker</span>
+                    <span class="tl-tag">PostgreSQL · Indexing</span>
+                    <span class="tl-tag">Pandas</span>
+                    <span class="tl-tag">Payroll · Labor Law</span>
+                    <span class="tl-tag">SUSALUD / SETIIPRES</span>
+                    <span class="tl-tag">EHR · ~1k records/day</span>
+                    <span class="tl-tag">Angular (collab)</span>
                 </div>
             </div>
 
@@ -961,7 +903,7 @@
 
         <!-- EV Case Study -->
         <div class="cs-card" id="cs-ev">
-            <div class="cs-header" onclick="toggleCS('cs-ev')">
+            <div class="cs-header">
                 <span class="cs-icon">🔐</span>
                 <div class="cs-title-block">
                     <h3>Multi-Executive Governance &amp; Security</h3>
@@ -1083,6 +1025,210 @@
         </div>
         <!-- end cs-ev -->
 
+        <!-- ── CASE STUDY 2: Electronic Invoicing Engine ── -->
+        <div class="cs-card" id="cs-invoicing">
+            <div class="cs-header">
+                <span class="cs-icon">🧾</span>
+                <div class="cs-title-block">
+                    <h3>Electronic Invoicing Engine</h3>
+                    <span class="cs-meta">Django · SUNAT / Nubefact API · Fiberlux · 2024–2025</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Fiberlux's invoicing workflow ran entirely inside Odoo — generating a single electronic invoice took <strong>~2 minutes</strong>, with no async support and brittle handling of complex cases: credit sales, detracciones, USD/PEN multi-currency, and SUNAT delivery retries.</p>
+                        <p>During billing peaks, the process saturated Odoo workers and blocked the entire ERP, creating SLA risk and manual intervention overhead for the operations team.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Architectural Solution</h4>
+                        <p>Built a standalone <strong>Django-based invoicing engine</strong> that replaces Odoo's invoicing core with a high-throughput, async-first pipeline integrated with the Nubefact (SUNAT) API.</p>
+                        <ul>
+                            <li><strong>Async/Sync Dual Mode:</strong> Primary path uses async SUNAT submission with automatic synchronous fallback — guaranteeing delivery under API instability without manual retries.</li>
+                            <li><strong>Concurrent Worker Pool:</strong> 10 parallel workers process batches simultaneously — enabling 50 invoices with embedded QR codes in ~35 seconds.</li>
+                            <li><strong>Validation Engine V2:</strong> Full business rule coverage for detracciones, exportaciones, venta al crédito, IGV handling, and comprobantes in USD/PEN per SUNAT normativa.</li>
+                            <li><strong>PDF + QR Generation:</strong> Transforms SUNAT XML responses into signed PDFs with embedded QR codes, automatically dispatched to customer + billing team via email.</li>
+                            <li><strong>Retry & Audit Trail:</strong> Exponential backoff with configurable attempts; every state transition (pending → sent → acknowledged → failed) recorded atomically for compliance traceability.</li>
+                            <li><strong>100% Test Coverage:</strong> Full unit + integration test suite covering happy paths, API failures, retry exhaustion, and multi-currency edge cases before production deployment.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Before vs. After</h4>
+                    <table class="cs-table">
+                        <thead>
+                            <tr><th>Dimension</th><th>Legacy (Odoo)</th><th>Django Engine</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Throughput</td><td class="val-before">1 invoice / ~2 min</td><td class="val-after">50 invoices / 35s (~170× faster)</td></tr>
+                            <tr><td>Concurrency</td><td class="val-before">Single synchronous thread</td><td class="val-after">10 parallel async workers</td></tr>
+                            <tr><td>Failure Handling</td><td class="val-before">Manual intervention required</td><td class="val-after">Auto-retry with exponential backoff</td></tr>
+                            <tr><td>Multi-currency</td><td class="val-before">Limited / error-prone</td><td class="val-after">Full USD/PEN + IGV coverage</td></tr>
+                            <tr><td>ERP Impact</td><td class="val-before">Saturated Odoo workers during peaks</td><td class="val-after">Fully decoupled — zero ERP contention</td></tr>
+                            <tr><td>Test Coverage</td><td class="val-before">None</td><td class="val-after">100% (unit + integration)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">~170×</span><span class="imp-l">Throughput gain</span></div>
+                        <div class="cs-impact"><span class="imp-n">35s</span><span class="imp-l">50 invoices w/ QR</span></div>
+                        <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Test coverage</span></div>
+                        <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">Manual retries</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Python · Django REST Framework</span>
+                        <span class="proj-tag">Nubefact / SUNAT API</span>
+                        <span class="proj-tag">Async Workers</span>
+                        <span class="proj-tag">PDF + QR Generation</span>
+                        <span class="proj-tag">PostgreSQL</span>
+                        <span class="proj-tag">Pytest · 100% Coverage</span>
+                        <span class="proj-tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── CASE STUDY 3: Five9 SFTP Sync ── -->
+        <div class="cs-card" id="cs-five9">
+            <div class="cs-header">
+                <span class="cs-icon">📡</span>
+                <div class="cs-title-block">
+                    <h3>High-Availability Sync Architecture</h3>
+                    <span class="cs-meta">Odoo 13 · Five9 SFTP · Python Threading · Fiberlux · 2024</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Fiberlux's custom Odoo module synced telephony data (call recordings, transcripts, quality reports) from Five9's SFTP server into the ERP. The original implementation was <strong>fully synchronous</strong> — during large data loads, it blocked Odoo's worker processes company-wide, freezing CRM and invoicing operations simultaneously.</p>
+                        <p>Additional issues: data inconsistencies between Five9 and Odoo, growing storage costs from unmanaged file accumulation, and fragile SFTP connectivity with no retry logic.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Architectural Solution</h4>
+                        <p>Re-engineered the entire sync module with a <strong>multi-threaded async architecture</strong> — decoupling heavy I/O from Odoo's request cycle entirely.</p>
+                        <ul>
+                            <li><strong>Decoupled Threading:</strong> Migrated SFTP business logic to independent Python threads — achieving <em>zero perceived latency</em> for end users during mass synchronizations.</li>
+                            <li><strong>Concurrency Control:</strong> Indexed boolean flags in PostgreSQL manage thread state and prevent race conditions across concurrent sync workers.</li>
+                            <li><strong>SQL Optimization:</strong> B-Tree indexes on <code>Many2one</code> foreign keys + PostgreSQL views reduced query cost on 40k+ record tables for high-performance reporting.</li>
+                            <li><strong>Batch Sanitization:</strong> Configurable <code>days_to_sanitize</code> parameter with batch processing — auto-purges stale files on schedule, achieving 30% storage reduction.</li>
+                            <li><strong>Resilient SFTP Client:</strong> Rebuilt Paramiko integration with hierarchical exception handling and automatic connection retry — handles network instability without operator intervention.</li>
+                            <li><strong>Forward-compatible Design:</strong> Architecture sized for projected 2026 data growth, with batch and thread scaling built in from the ground up.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Before vs. After</h4>
+                    <table class="cs-table">
+                        <thead>
+                            <tr><th>Dimension</th><th>Legacy (Sync)</th><th>Async Architecture</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>ERP Impact</td><td class="val-before">Company-wide Odoo freeze during sync</td><td class="val-after">Zero perceived latency — fully decoupled</td></tr>
+                            <tr><td>Data Consistency</td><td class="val-before">Inconsistencies between Five9 and Odoo</td><td class="val-after">100% record-level consistency guaranteed</td></tr>
+                            <tr><td>Storage</td><td class="val-before">Unbounded file accumulation</td><td class="val-after">30% reduction via auto-batch sanitization</td></tr>
+                            <tr><td>Query Performance</td><td class="val-before">Slow scans on 40k+ record tables</td><td class="val-after">B-Tree indexed, view-optimized queries</td></tr>
+                            <tr><td>SFTP Resilience</td><td class="val-before">Hard failures on network issues</td><td class="val-after">Auto-retry with hierarchical error handling</td></tr>
+                            <tr><td>Race Conditions</td><td class="val-before">Possible data corruption under load</td><td class="val-after">Eliminated via indexed thread-state flags</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">0ms</span><span class="imp-l">ERP latency during sync</span></div>
+                        <div class="cs-impact"><span class="imp-n">30%</span><span class="imp-l">Storage reduction</span></div>
+                        <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Data consistency</span></div>
+                        <div class="cs-impact"><span class="imp-n">40k+</span><span class="imp-l">Records optimized</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Python · Odoo v13</span>
+                        <span class="proj-tag">SFTP · Paramiko</span>
+                        <span class="proj-tag">Python Threading</span>
+                        <span class="proj-tag">PostgreSQL · B-Tree Index</span>
+                        <span class="proj-tag">Concurrency Control</span>
+                        <span class="proj-tag">Linux · Server Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── CASE STUDY 4: Odoo v13 → v17 Migration ── -->
+        <div class="cs-card" id="cs-migration">
+            <div class="cs-header">
+                <span class="cs-icon">🏗️</span>
+                <div class="cs-title-block">
+                    <h3>ERP Migration Strategy — Odoo v13 → v17</h3>
+                    <span class="cs-meta">Odoo · Django Microservices · Docker · Fiberlux · 2024–Present</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Challenge</h4>
+                        <p>Fiberlux operates a <strong>critical production ERP on Odoo v13</strong> managing mass invoicing, CRM, telephony integration, and customer contracts — all with heavily customized modules built over years.</p>
+                        <p>A hard upgrade path is infeasible: custom modules use deprecated APIs, the data volume is large, and a single downtime window would halt billing operations. Meanwhile, v13 is approaching end-of-life with growing performance bottlenecks under current load.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Migration Strategy</h4>
+                        <p>Designed a <strong>phased extraction architecture</strong> — instead of a big-bang upgrade, critical business logic is progressively migrated to independent Django services, reducing coupling to Odoo's core with each iteration.</p>
+                        <ul>
+                            <li><strong>Phase 1 — Stabilize v13:</strong> Resolved production deadlocks and RAM saturation by tuning Odoo worker count, memory limits, and PostgreSQL connection pooling. Deployed a "Testodoo" environment for safe mass validation before any production change.</li>
+                            <li><strong>Phase 2 — Extract Critical Modules:</strong> Invoicing engine, Five9 sync, and EV governance migrated to standalone Django services with clean API boundaries — decoupled from Odoo's ORM entirely.</li>
+                            <li><strong>Phase 3 — Containerization:</strong> Dockerizing the v13 production base as the foundation for the v17 upgrade path, with environment parity between dev, staging, and production.</li>
+                            <li><strong>Phase 4 — v17 Target Architecture:</strong> API compatibility layer defined; custom modules refactored toward Odoo v17 standards applying OCP and single-responsibility principles for forward-compatibility.</li>
+                            <li><strong>Architecture Standards:</strong> Established SOLID principles, design patterns, and 100% unit test coverage policy as mandatory standards for all new ERP components.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Key Technical Decisions</h4>
+                    <table class="cs-table">
+                        <thead>
+                            <tr><th>Decision</th><th>Rationale</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Phased extraction vs. big-bang upgrade</td><td>Eliminates single-point downtime risk; each extracted service is independently deployable and testable</td></tr>
+                            <tr><td>Django microservices as migration target</td><td>Full control over performance, testability, and API design — no ORM constraints from Odoo's framework</td></tr>
+                            <tr><td>Testodoo validation environment</td><td>Enables mass UAT of production data before any change reaches live systems</td></tr>
+                            <tr><td>Worker/memory tuning before migration</td><td>Extends v13 operational stability and buys safe runway for the phased extraction</td></tr>
+                            <tr><td>100% coverage policy from day one</td><td>Prevents regression debt accumulating as new services replace legacy Odoo modules</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cs-block">
+                    <h4>Status & Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">Production deadlocks</span></div>
+                        <div class="cs-impact"><span class="imp-n">3</span><span class="imp-l">Modules extracted</span></div>
+                        <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Coverage standard</span></div>
+                        <div class="cs-impact"><span class="imp-n">v17</span><span class="imp-l">Target architecture</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Python · Odoo v13 / v17</span>
+                        <span class="proj-tag">Django REST Framework</span>
+                        <span class="proj-tag">Docker · Docker Compose</span>
+                        <span class="proj-tag">PostgreSQL · Tuning</span>
+                        <span class="proj-tag">SOLID · Design Patterns</span>
+                        <span class="proj-tag">Microservices Architecture</span>
+                        <span class="proj-tag">API Compatibility Layer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -1195,8 +1341,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="/cdn-cgi/l/email-protection#45363027292c242b212033052228242c296b262a28" class="btn-primary">
-                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="05767067696c646b616073456268646c692b666a68">[email&#160;protected]</span>
+            <a href="/cdn-cgi/l/email-protection#7c0f091e10151d1218190a3c1b111d1510521f1311" class="btn-primary">
+                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="b4c7c1d6d8ddd5dad0d1c2f4d3d9d5ddd89ad7dbd9">[email&#160;protected]</span>
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -1213,3 +1359,37 @@
     <p>© 2025 Luis Gonzalez · Backend Python Engineer · Lima, Perú</p>
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="/cdn-cgi/l/email-protection#463533242a2f272822233006212b272f2a6825292b"><i class="fa fa-envelope"></i></a></li>
+    </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/scripts.min.js"></script>
+<script>
+    // ── Case Study accordion ──────────────────────
+    document.querySelectorAll('.cs-header').forEach(function(header) {
+        header.addEventListener('click', function() {
+            var card = this.closest('.cs-card');
+            card.classList.toggle('open');
+        });
+    });
+
+    // ── Hamburger nav ─────────────────────────────
+    var toggle = document.getElementById('nav-toggle');
+    var drawer = document.getElementById('nav-drawer');
+    if (toggle && drawer) {
+        toggle.addEventListener('click', function() {
+            drawer.classList.toggle('open');
+        });
+        document.addEventListener('click', function(e) {
+            if (!toggle.contains(e.target) && !drawer.contains(e.target)) {
+                drawer.classList.remove('open');
+            }
+        });
+    }
+
+    // ── Smooth scroll + close drawer on nav click ─
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            var target = docum
