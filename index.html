@@ -647,7 +647,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="mailto:subliandev@gmail.com" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection#54272136383d353a303122143339353d387a373b39" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -687,16 +687,16 @@
             <!-- Fiberlux -->
             <div class="tl-item">
                 <div class="tl-dot"></div>
-                <div class="tl-date">Apr 2, 2024 – Present · Fiberlux · Full-time · Lima, Perú</div>
-                <h3>Analista Programador</h3>
+                <div class="tl-date">Apr 2, 2025 – Present · Fiberlux · Full-time · Lima, Perú</div>
+                <h3>Backend Developer &amp; Systems Analyst</h3>
                 <h4>Backend Engineering · Odoo · Django · Performance & Architecture</h4>
                 <ul>
                     <li>Built a <strong>Django-based Electronic Invoicing Engine</strong> replacing a slow Odoo process — delivering <strong>~170× throughput improvement</strong> (from ~2 min/invoice to 50 invoices in 35s) using async workers, SUNAT/Nubefact API integration, PDF+QR generation, and automatic email dispatch.</li>
                     <li>Re-architected Five9 SFTP sync module from synchronous to <strong>multi-threaded async design</strong>, eliminating company-wide blocking during data loads and achieving <strong>30% reduction in production storage</strong> via configurable batch sanitization.</li>
                     <li>Delivered <strong>80% performance improvement</strong> on critical Odoo invoicing workflows (60s → 8–15s) via PostgreSQL indexing, advanced profiling, and async worker queue tuning.</li>
                     <li>Designed <strong>Multi-Executive Governance (EV) engine</strong> extending Odoo's <code>ir.rule</code> security framework — eliminated 100% of cross-team <code>AccessError</code> blocks, reducing access resolution from 2–4 hours to 0ms.</li>
-                    <li>Consolidated 6 fragmented external APIs into 3 major endpoints applying <strong>Singleton and Strategy design patterns</strong>, reducing integration complexity significantly.</li>
-                    <li>Leading phased <strong>Odoo v13 → Django migration</strong> strategy: extracting critical modules into Django microservices, resolving production deadlocks via worker/memory tuning, and maintaining a "Testodoo" validation environment.</li>
+                    <li>Consolidated 6 fragmented external APIs into <strong>2 major endpoints</strong> applying Singleton and Strategy design patterns, drastically reducing integration complexity.</li>
+                    <li>Leading phased <strong>Odoo v13 → Django migration</strong>: bridged first 5 modules via flat-table intermediate layer, extracted 3 critical services to standalone Django microservices, resolved production deadlocks via worker/memory tuning.</li>
                     <li>Achieved <strong>100% test coverage</strong> on the base Django API repository; established SOLID principles and unit testing policy as architectural standards for the new ERP.</li>
                     <li>Built <strong>B2B Lead Generation agent</strong> using Python/BeautifulSoup/Pandas — scraping, RUC validation, sector classification, and automated data enrichment pipeline for the commercial team.</li>
                     <li>Mentored 3 programming interns (Andy, Abigail, Fernanda) on backend architecture, design patterns, and testing practices.</li>
@@ -708,7 +708,7 @@
                     <span class="tl-tag">Async/Sync Fallback</span>
                     <span class="tl-tag">Odoo v13→Django</span>
                     <span class="tl-tag">Python Threading</span>
-                    <span class="tl-tag">SFTP · Paramiko</span>
+                    <span class="tl-tag">SFTP · Fabric</span>
                     <span class="tl-tag">PostgreSQL · B-Tree Index</span>
                     <span class="tl-tag">30% Storage Saved</span>
                     <span class="tl-tag">Design Patterns</span>
@@ -1119,7 +1119,7 @@
                             <li><strong>Concurrency Control:</strong> Indexed boolean flags in PostgreSQL manage thread state and prevent race conditions across concurrent sync workers.</li>
                             <li><strong>SQL Optimization:</strong> B-Tree indexes on <code>Many2one</code> foreign keys + PostgreSQL views reduced query cost on 40k+ record tables for high-performance reporting.</li>
                             <li><strong>Batch Sanitization:</strong> Configurable <code>days_to_sanitize</code> parameter with batch processing — auto-purges stale files on schedule, achieving 30% storage reduction.</li>
-                            <li><strong>Resilient SFTP Client:</strong> Rebuilt Paramiko integration with hierarchical exception handling and automatic connection retry — handles network instability without operator intervention.</li>
+                            <li><strong>Resilient SFTP Client:</strong> Re-engineered SFTP client using <strong>Fabric</strong> (replacing Paramiko) with hierarchical exception handling and automatic connection retry — handles network instability without operator intervention.</li>
                             <li><strong>Forward-compatible Design:</strong> Architecture sized for projected 2026 data growth, with batch and thread scaling built in from the ground up.</li>
                         </ul>
                     </div>
@@ -1152,7 +1152,7 @@
                     </div>
                     <div class="cs-stack-row">
                         <span class="proj-tag">Python · Odoo v13</span>
-                        <span class="proj-tag">SFTP · Paramiko Fabric</span>
+                        <span class="proj-tag">SFTP · Fabric</span>
                         <span class="proj-tag">Python Threading</span>
                         <span class="proj-tag">PostgreSQL · B-Tree Index</span>
                         <span class="proj-tag">Concurrency Control</span>
@@ -1167,8 +1167,8 @@
             <div class="cs-header">
                 <span class="cs-icon">🏗️</span>
                 <div class="cs-title-block">
-                    <h3>ERP Migration Strategy — Odoo v13 → Django</h3>
-                    <span class="cs-meta">Odoo · Django Microservices · Docker · Fiberlux · 2024–Present</span>
+                    <h3>ERP Migration — Odoo v13 → Django</h3>
+                    <span class="cs-meta">Odoo v13 · Django Microservices · Docker · Fiberlux · 2024–Present</span>
                 </div>
                 <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
             </div>
@@ -1177,17 +1177,17 @@
                     <div class="cs-block">
                         <h4>The Challenge</h4>
                         <p>Fiberlux operates a <strong>critical production ERP on Odoo v13</strong> managing mass invoicing, CRM, telephony integration, and customer contracts — all with heavily customized modules built over years.</p>
-                        <p>A hard upgrade path is infeasible: custom modules use deprecated APIs, the data volume is large, and a single downtime window would halt billing operations. Meanwhile, v13 is approaching end-of-life with growing performance bottlenecks under current load.</p>
+                        <p>A hard v17 upgrade proved infeasible: custom modules rely on deprecated APIs, data volume is large, and any single downtime window would halt billing operations. A v17 migration was initially scoped but ultimately abandoned in favor of a <strong>full Django rewrite</strong> — giving full control over performance, testability, and architecture without Odoo ORM constraints.</p>
                     </div>
                     <div class="cs-block">
                         <h4>Migration Strategy</h4>
-                        <p>Designed a <strong>phased extraction architecture</strong> — instead of a big-bang upgrade, critical business logic is progressively migrated to independent Django services, reducing coupling to Odoo's core with each iteration.</p>
+                        <p>Designed a <strong>phased extraction architecture</strong> — instead of a risky big-bang rewrite, critical business logic is progressively migrated to standalone Django services, reducing Odoo coupling with each iteration.</p>
                         <ul>
                             <li><strong>Phase 1 — Stabilize v13:</strong> Resolved production deadlocks and RAM saturation by tuning Odoo worker count, memory limits, and PostgreSQL connection pooling. Deployed a "Testodoo" environment for safe mass validation before any production change.</li>
-                            <li><strong>Phase 2 — Extract Critical Modules:</strong> Invoicing engine, Five9 sync, and EV governance migrated to standalone Django services with clean API boundaries — decoupled from Odoo's ORM entirely.</li>
-                            <li><strong>Phase 3 — Containerization:</strong> Dockerizing the v13 production base as the foundation for the v17 upgrade path, with environment parity between dev, staging, and production.</li>
-                            <li><strong>Phase 4 — v17 Target Architecture:</strong> API compatibility layer defined; custom modules refactored toward Odoo v17 standards applying OCP and single-responsibility principles for forward-compatibility.</li>
-                            <li><strong>Architecture Standards:</strong> Established SOLID principles, design patterns, and 100% unit test coverage policy as mandatory standards for all new ERP components.</li>
+                            <li><strong>Phase 2 — Flat-table Bridge:</strong> Migrated the first 5 modules using intermediate flat tables as a compatibility layer — decoupling business logic from Odoo's ORM while maintaining data continuity during the transition period.</li>
+                            <li><strong>Phase 3 — Extract to Django:</strong> Invoicing engine, Five9 sync, and EV governance fully migrated to standalone Django services with clean REST API boundaries — entirely decoupled from Odoo's core.</li>
+                            <li><strong>Phase 4 — Containerization:</strong> Dockerizing v13 production base with environment parity between dev, staging, and production as the foundation for the full Django target.</li>
+                            <li><strong>Current Status:</strong> Project advanced but <em>currently paused</em> — foundation, architecture standards, and critical module extractions are complete. Resumption planned with frontend collaboration (Angular) already underway by a colleague.</li>
                         </ul>
                     </div>
                 </div>
@@ -1199,31 +1199,31 @@
                             <tr><th>Decision</th><th>Rationale</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Phased extraction vs. big-bang upgrade</td><td>Eliminates single-point downtime risk; each extracted service is independently deployable and testable</td></tr>
-                            <tr><td>Django microservices as migration target</td><td>Full control over performance, testability, and API design — no ORM constraints from Odoo's framework</td></tr>
+                            <tr><td>Django over Odoo v17 as target</td><td>Full control over performance, testability, and API design — eliminates ORM constraints and framework lock-in entirely</td></tr>
+                            <tr><td>Flat-table intermediate layer</td><td>Enables incremental module migration without disrupting live operations — data continuity preserved throughout</td></tr>
+                            <tr><td>Phased extraction vs. big-bang rewrite</td><td>Eliminates single-point downtime risk; each extracted service is independently deployable and testable</td></tr>
                             <tr><td>Testodoo validation environment</td><td>Enables mass UAT of production data before any change reaches live systems</td></tr>
-                            <tr><td>Worker/memory tuning before migration</td><td>Extends v13 operational stability and buys safe runway for the phased extraction</td></tr>
-                            <tr><td>100% coverage policy from day one</td><td>Prevents regression debt accumulating as new services replace legacy Odoo modules</td></tr>
+                            <tr><td>100% coverage policy from day one</td><td>Prevents regression debt accumulating as new Django services replace legacy Odoo modules</td></tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="cs-block">
-                    <h4>Status & Impact</h4>
+                    <h4>Status &amp; Impact</h4>
                     <div class="cs-impacts">
                         <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">Production deadlocks</span></div>
-                        <div class="cs-impact"><span class="imp-n">3</span><span class="imp-l">Modules extracted</span></div>
+                        <div class="cs-impact"><span class="imp-n">5</span><span class="imp-l">Modules bridged</span></div>
+                        <div class="cs-impact"><span class="imp-n">3</span><span class="imp-l">Services extracted</span></div>
                         <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Coverage standard</span></div>
-                        <div class="cs-impact"><span class="imp-n">v17</span><span class="imp-l">Target architecture</span></div>
                     </div>
                     <div class="cs-stack-row">
-                        <span class="proj-tag">Python · Odoo v13 / v17</span>
+                        <span class="proj-tag">Python · Odoo v13</span>
                         <span class="proj-tag">Django REST Framework</span>
                         <span class="proj-tag">Docker · Docker Compose</span>
                         <span class="proj-tag">PostgreSQL · Tuning</span>
+                        <span class="proj-tag">Flat-table Bridge Pattern</span>
                         <span class="proj-tag">SOLID · Design Patterns</span>
                         <span class="proj-tag">Microservices Architecture</span>
-                        <span class="proj-tag">API Compatibility Layer</span>
                     </div>
                 </div>
             </div>
@@ -1232,6 +1232,94 @@
     </div>
 </div>
 
+
+        <!-- ── CASE STUDY 5: cProfile Performance Optimization ── -->
+        <div class="cs-card" id="cs-profiling">
+            <div class="cs-header">
+                <span class="cs-icon">⚡</span>
+                <div class="cs-title-block">
+                    <h3>Performance Profiling &amp; Query Optimization</h3>
+                    <span class="cs-meta">cProfile · SnakeViz · N+1 Queries · PostgreSQL Indexes · Fiberlux · 2024</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Several critical Odoo and Django workflows exhibited <strong>unexplained latency</strong> under production load — invoicing generation, CRM report queries, and data sync operations were degrading progressively as data volume grew.</p>
+                        <p>Without systematic profiling, bottleneck identification was guesswork: developers were optimizing the wrong paths while true hotspots remained undetected. The system had no baseline performance data and no methodology for continuous optimization.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Methodology &amp; Solution</h4>
+                        <p>Implemented a <strong>systematic profiling pipeline</strong> using <code>cProfile</code> + <code>SnakeViz</code> to identify true hotspots with data — eliminating guesswork from optimization decisions.</p>
+                        <ul>
+                            <li><strong>cProfile Instrumentation:</strong> Wrapped critical code paths with <code>cProfile.Profile()</code> context managers, capturing full call-stack timing data including cumulative and per-call execution times across all function invocations.</li>
+                            <li><strong>SnakeViz Visualization:</strong> Rendered flame graphs and icicle charts to visually identify the highest-cost call chains — making it immediately clear which functions dominated execution time.</li>
+                            <li><strong>N+1 Query Detection:</strong> Profiling revealed multiple N+1 patterns where ORM loops were issuing one DB query per record. Resolved by rewriting with <code>select_related()</code>, <code>prefetch_related()</code>, and bulk querysets — collapsing hundreds of queries into single optimized calls.</li>
+                            <li><strong>Strategic Index Creation:</strong> Used <code>EXPLAIN ANALYZE</code> on the slowest queries to identify sequential scans on high-cardinality columns. Created <strong>B-Tree composite indexes</strong> on frequently filtered foreign keys and date ranges — turning multi-second scans into millisecond lookups.</li>
+                            <li><strong>Script-level Refactoring:</strong> Several hotspots were Python-level inefficiencies — replaced nested loops with set-based lookups, eliminated redundant serialization calls, and moved heavy computations outside iteration contexts.</li>
+                            <li><strong>Baseline &amp; Regression Testing:</strong> Established benchmark scripts to measure before/after timings, ensuring optimizations held under realistic data volumes and preventing performance regressions in future deployments.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Bottlenecks Found &amp; Resolved</h4>
+                    <table class="cs-table">
+                        <thead>
+                            <tr><th>Bottleneck Type</th><th>Root Cause</th><th>Resolution</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>N+1 ORM queries</td>
+                                <td class="val-before">Loop issuing 1 query per record on related models</td>
+                                <td class="val-after"><code>select_related</code> / <code>prefetch_related</code> — collapsed to single query</td>
+                            </tr>
+                            <tr>
+                                <td>Sequential table scans</td>
+                                <td class="val-before">Missing indexes on FK + date filter columns</td>
+                                <td class="val-after">B-Tree composite indexes — ms-level lookups on 40k+ rows</td>
+                            </tr>
+                            <tr>
+                                <td>Redundant serialization</td>
+                                <td class="val-before">Same objects serialized multiple times per request cycle</td>
+                                <td class="val-after">Cached serialized output + lazy evaluation</td>
+                            </tr>
+                            <tr>
+                                <td>Nested loop logic</td>
+                                <td class="val-before">O(n²) Python loops on large datasets</td>
+                                <td class="val-after">Set-based lookups + bulk ORM operations — O(n) complexity</td>
+                            </tr>
+                            <tr>
+                                <td>Heavy in-loop computation</td>
+                                <td class="val-before">Expensive calculations repeated inside iteration</td>
+                                <td class="val-after">Pre-computed outside loop, passed as lookup dict</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">300%</span><span class="imp-l">Query speed gain</span></div>
+                        <div class="cs-impact"><span class="imp-n">N+1</span><span class="imp-l">Patterns eliminated</span></div>
+                        <div class="cs-impact"><span class="imp-n">O(n²)→O(n)</span><span class="imp-l">Loop complexity</span></div>
+                        <div class="cs-impact"><span class="imp-n">Data-driven</span><span class="imp-l">Optimization process</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">cProfile · SnakeViz</span>
+                        <span class="proj-tag">EXPLAIN ANALYZE</span>
+                        <span class="proj-tag">PostgreSQL Indexes</span>
+                        <span class="proj-tag">Django ORM Optimization</span>
+                        <span class="proj-tag">select_related · prefetch_related</span>
+                        <span class="proj-tag">Python Performance</span>
+                        <span class="proj-tag">Benchmark Scripts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!-- METRICS -->
 <div id="metrics" class="section section-alt">
     <div class="container">
@@ -1341,8 +1429,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="mailto:subliandev@gmail.com" class="btn-primary">
-                <i class="fa fa-envelope"></i> subliandev@gmail.com
+            <a href="/cdn-cgi/l/email-protection#ef9c9a8d83868e818b8a99af88828e8683c18c8082" class="btn-primary">
+                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="ccbfb9aea0a5ada2a8a9ba8caba1ada5a0e2afa3a1">[email&#160;protected]</span>
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -1360,11 +1448,11 @@
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
+        <li><a href="/cdn-cgi/l/email-protection#25565047494c444b414053654248444c490b464a48"><i class="fa fa-envelope"></i></a></li>
     </ul>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1407,17 +1495,4 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var j = 0; j < anchors.length; j++) {
         (function(a) {
             a.addEventListener('click', function(e) {
-                var target = document.querySelector(a.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    if (drawer) drawer.classList.remove('open');
-                }
-            });
-        })(anchors[j]);
-    }
-
-});
-</script>
-</body>
-</html>
+                var target = document.quer
