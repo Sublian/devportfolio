@@ -647,7 +647,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection#54272136383d353a303122143339353d387a373b39" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="mailto:subliandev@gmail.com" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -687,7 +687,7 @@
             <!-- Fiberlux -->
             <div class="tl-item">
                 <div class="tl-dot"></div>
-                <div class="tl-date">Apr 2, 2025 – Present · Fiberlux · Full-time · Lima, Perú</div>
+                <div class="tl-date">Apr 2, 2024 – Present · Fiberlux · Full-time · Lima, Perú</div>
                 <h3>Backend Developer &amp; Systems Analyst</h3>
                 <h4>Backend Engineering · Odoo · Django · Performance & Architecture</h4>
                 <ul>
@@ -1229,10 +1229,6 @@
             </div>
         </div>
 
-    </div>
-</div>
-
-
         <!-- ── CASE STUDY 5: cProfile Performance Optimization ── -->
         <div class="cs-card" id="cs-profiling">
             <div class="cs-header">
@@ -1267,6 +1263,7 @@
                 <div class="cs-block" style="margin-bottom:1.6rem;">
                     <h4>Bottlenecks Found &amp; Resolved</h4>
                     <table class="cs-table">
+                        <colgroup><col style="width:22%"><col style="width:39%"><col style="width:39%"></colgroup>
                         <thead>
                             <tr><th>Bottleneck Type</th><th>Root Cause</th><th>Resolution</th></tr>
                         </thead>
@@ -1429,8 +1426,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="/cdn-cgi/l/email-protection#ef9c9a8d83868e818b8a99af88828e8683c18c8082" class="btn-primary">
-                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="ccbfb9aea0a5ada2a8a9ba8caba1ada5a0e2afa3a1">[email&#160;protected]</span>
+            <a href="mailto:subliandev@gmail.com" class="btn-primary">
+                <i class="fa fa-envelope"></i> subliandev@gmail.com
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -1448,16 +1445,16 @@
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="/cdn-cgi/l/email-protection#25565047494c444b414053654248444c490b464a48"><i class="fa fa-envelope"></i></a></li>
+        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
     </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ── Accordion ─────────────────────────────────
+    // Accordion
     var headers = document.querySelectorAll('.cs-header');
     for (var i = 0; i < headers.length; i++) {
         (function(header) {
@@ -1475,7 +1472,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })(headers[i]);
     }
 
-    // ── Hamburger nav ─────────────────────────────
+    // Hamburger nav
     var toggle = document.getElementById('nav-toggle');
     var drawer = document.getElementById('nav-drawer');
     if (toggle && drawer) {
@@ -1490,9 +1487,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ── Smooth scroll ─────────────────────────────
+    // Smooth scroll
     var anchors = document.querySelectorAll('a[href^="#"]');
     for (var j = 0; j < anchors.length; j++) {
         (function(a) {
             a.addEventListener('click', function(e) {
-                var target = document.quer
+                var target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if (drawer) drawer.classList.remove('open');
+                }
+            });
+        })(anchors[j]);
+    }
+
+});
+</script>
+</body>
+</html>
