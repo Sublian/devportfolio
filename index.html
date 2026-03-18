@@ -1116,6 +1116,7 @@
                         <p>Re-engineered the entire sync module with a <strong>multi-threaded async architecture</strong> — decoupling heavy I/O from Odoo's request cycle entirely.</p>
                         <ul>
                             <li><strong>Decoupled Threading:</strong> Migrated SFTP business logic to independent Python threads — achieving <em>zero perceived latency</em> for end users during mass synchronizations.</li>
+                            <li><strong>Memory-Efficient Batch Governor:</strong> Implemented a configurable batch-size controller (e.g., 1,000 records) that <strong>terminates remote scanning immediately</strong> upon reaching the limit, preventing Odoo's RAM from hitting soft-limit thresholds during massive historical migrations.</li>
                             <li><strong>Concurrency Control:</strong> Indexed boolean flags in PostgreSQL manage thread state and prevent race conditions across concurrent sync workers.</li>
                             <li><strong>SQL Optimization:</strong> B-Tree indexes on <code>Many2one</code> foreign keys + PostgreSQL views reduced query cost on 40k+ record tables for high-performance reporting.</li>
                             <li><strong>Batch Sanitization:</strong> Configurable <code>days_to_sanitize</code> parameter with batch processing — auto-purges stale files on schedule, achieving 30% storage reduction.</li>
@@ -1134,6 +1135,7 @@
                         <tbody>
                             <tr><td>ERP Impact</td><td class="val-before">Company-wide Odoo freeze during sync</td><td class="val-after">Zero perceived latency — fully decoupled</td></tr>
                             <tr><td>Data Consistency</td><td class="val-before">Inconsistencies between Five9 and Odoo</td><td class="val-after">100% record-level consistency guaranteed</td></tr>
+                            <tr><td>RAM Stability</td><td class="val-before">Risk of OOM on 100k+ files</td><td class="val-after">Flat memory footprint via batch-limit governor</td></tr>
                             <tr><td>Storage</td><td class="val-before">Unbounded file accumulation</td><td class="val-after">30% reduction via auto-batch sanitization</td></tr>
                             <tr><td>Query Performance</td><td class="val-before">Slow scans on 40k+ record tables</td><td class="val-after">B-Tree indexed, view-optimized queries</td></tr>
                             <tr><td>SFTP Resilience</td><td class="val-before">Hard failures on network issues</td><td class="val-after">Auto-retry with hierarchical error handling</td></tr>
