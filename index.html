@@ -132,7 +132,7 @@
         width: 32px; height: 1px; background: var(--green);
     }
     #lead-content h1 {
-        font-family: var(--serif); font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+        font-family: var(--serif); font-size: clamp(1.9rem, 5.5vw, 5.2rem);
         color: #edeae4; line-height: 1.05; letter-spacing: -.02em;
         margin-bottom: .6rem; font-weight: 800;
     }
@@ -564,6 +564,68 @@
             grid-column: 2; justify-self: end;
         }
     }
+
+
+    /* ══════════════════════════════════════════
+       ANIMATIONS — subtle, professional
+    ══════════════════════════════════════════ */
+
+    /* Timeline: vertical line draws from top on scroll entry */
+    .timeline::before {
+        transform-origin: top center;
+        transform: scaleY(0);
+        transition: transform 1.1s cubic-bezier(.22,1,.36,1);
+    }
+    .timeline.tl-visible::before { transform: scaleY(1); }
+
+    /* Timeline dots: small pop when item becomes visible */
+    .tl-dot {
+        transform: scale(0);
+        transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .tl-item.tl-in .tl-dot { transform: scale(1); }
+
+    /* Timeline items: very gentle fade-up, barely noticeable */
+    .tl-item {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .4s ease, transform .4s ease;
+    }
+    .tl-item.tl-in { opacity: 1; transform: none; }
+
+    /* Project cards: refined lift on hover */
+    .proj-card {
+        transition: transform .22s cubic-bezier(.22,1,.36,1),
+                    border-color .22s ease,
+                    box-shadow .22s ease;
+    }
+    .proj-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(160,200,120,.35);
+        box-shadow: 0 12px 32px rgba(0,0,0,.22);
+    }
+
+    /* Case study cards: subtle shadow on hover (closed state only) */
+    .cs-card {
+        transition: box-shadow .2s ease;
+    }
+    .cs-card:not(.open):hover {
+        box-shadow: 0 3px 16px rgba(0,0,0,.07);
+    }
+    .cs-header {
+        transition: background .15s ease;
+    }
+
+    /* Education cards: same refined lift */
+    .edu-card {
+        transition: transform .22s cubic-bezier(.22,1,.36,1),
+                    box-shadow .22s ease;
+    }
+    .edu-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,.07);
+    }
+
     /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(18px); }
@@ -647,7 +709,7 @@
             <div class="about-left">
                 <h3>Luis<br>Gonzalez</h3>
                 <p class="role">Backend Python Engineer</p>
-                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="mailto:subliandev@gmail.com" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
+                <p style="font-size:.85rem;color:var(--muted);">Lima, Perú · <a href="/cdn-cgi/l/email-protection#74070116181d151a101102341319151d185a171b19" class="__cf_email__" data-cfemail="0a797f6866636b646e6f7c4a6d676b636624696567">[email&#160;protected]</a></p>
                 <div class="stats-row">
                     <div class="stat">
                         <div class="stat-n">2+</div>
@@ -1116,11 +1178,11 @@
                         <p>Re-engineered the entire sync module with a <strong>multi-threaded async architecture</strong> — decoupling heavy I/O from Odoo's request cycle entirely.</p>
                         <ul>
                             <li><strong>Decoupled Threading:</strong> Migrated SFTP business logic to independent Python threads — achieving <em>zero perceived latency</em> for end users during mass synchronizations.</li>
-                            <li><strong>Memory-Efficient Batch Governor:</strong> Implemented a configurable batch-size controller (e.g., 1,000 records) that <strong>terminates remote scanning immediately</strong> upon reaching the limit, preventing Odoo's RAM from hitting soft-limit thresholds during massive historical migrations.</li>
                             <li><strong>Concurrency Control:</strong> Indexed boolean flags in PostgreSQL manage thread state and prevent race conditions across concurrent sync workers.</li>
                             <li><strong>SQL Optimization:</strong> B-Tree indexes on <code>Many2one</code> foreign keys + PostgreSQL views reduced query cost on 40k+ record tables for high-performance reporting.</li>
                             <li><strong>Batch Sanitization:</strong> Configurable <code>days_to_sanitize</code> parameter with batch processing — auto-purges stale files on schedule, achieving 30% storage reduction.</li>
                             <li><strong>Resilient SFTP Client:</strong> Re-engineered SFTP client using <strong>Fabric</strong> (replacing Paramiko) with hierarchical exception handling and automatic connection retry — handles network instability without operator intervention.</li>
+                            <li><strong>Memory-Efficient Batch Governor:</strong> Implemented a configurable batch-size controller (e.g., 1,000 records) that <strong>terminates remote scanning immediately</strong> upon reaching the limit, preventing Odoo's RAM from hitting soft-limit thresholds during massive historical migrations.</li>
                             <li><strong>Forward-compatible Design:</strong> Architecture sized for projected 2026 data growth, with batch and thread scaling built in from the ground up.</li>
                         </ul>
                     </div>
@@ -1135,10 +1197,10 @@
                         <tbody>
                             <tr><td>ERP Impact</td><td class="val-before">Company-wide Odoo freeze during sync</td><td class="val-after">Zero perceived latency — fully decoupled</td></tr>
                             <tr><td>Data Consistency</td><td class="val-before">Inconsistencies between Five9 and Odoo</td><td class="val-after">100% record-level consistency guaranteed</td></tr>
-                            <tr><td>RAM Stability</td><td class="val-before">Risk of OOM on 100k+ files</td><td class="val-after">Flat memory footprint via batch-limit governor</td></tr>
                             <tr><td>Storage</td><td class="val-before">Unbounded file accumulation</td><td class="val-after">30% reduction via auto-batch sanitization</td></tr>
                             <tr><td>Query Performance</td><td class="val-before">Slow scans on 40k+ record tables</td><td class="val-after">B-Tree indexed, view-optimized queries</td></tr>
                             <tr><td>SFTP Resilience</td><td class="val-before">Hard failures on network issues</td><td class="val-after">Auto-retry with hierarchical error handling</td></tr>
+                            <tr><td>RAM Stability</td><td class="val-before">Risk of OOM on 100k+ files</td><td class="val-after">Flat memory footprint via batch-limit governor</td></tr>
                             <tr><td>Race Conditions</td><td class="val-before">Possible data corruption under load</td><td class="val-after">Eliminated via indexed thread-state flags</td></tr>
                         </tbody>
                     </table>
@@ -1428,8 +1490,8 @@
         <h2 class="section-heading">Let's Connect <span class="bar" style="background:var(--green);"></span></h2>
         <p class="contact-tagline">Open to remote backend roles, Python infrastructure collaboration, and mentorship opportunities.</p>
         <div class="contact-btns">
-            <a href="mailto:subliandev@gmail.com" class="btn-primary">
-                <i class="fa fa-envelope"></i> subliandev@gmail.com
+            <a href="/cdn-cgi/l/email-protection#403335222c29212e24253600272d21292c6e232f2d" class="btn-primary">
+                <i class="fa fa-envelope"></i> <span class="__cf_email__" data-cfemail="463533242a2f272822233006212b272f2a6825292b">[email&#160;protected]</span>
             </a>
             <a href="https://github.com/Sublian" class="btn-ghost" target="_blank">
                 <i class="fa fa-github"></i> GitHub
@@ -1447,34 +1509,32 @@
     <ul>
         <li><a href="https://github.com/Sublian" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a href="https://www.linkedin.com/in/luisangelgp/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="mailto:subliandev@gmail.com"><i class="fa fa-envelope"></i></a></li>
+        <li><a href="/cdn-cgi/l/email-protection#87f4f2e5ebeee6e9e3e2f1c7e0eae6eeeba9e4e8ea"><i class="fa fa-envelope"></i></a></li>
     </ul>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Accordion
+    // ── Accordion ─────────────────────────────────
     var headers = document.querySelectorAll('.cs-header');
     for (var i = 0; i < headers.length; i++) {
         (function(header) {
             header.addEventListener('click', function(e) {
                 var el = e.target;
-                while (el && !el.classList.contains('cs-card')) {
-                    el = el.parentElement;
-                }
+                while (el && !el.classList.contains('cs-card')) { el = el.parentElement; }
                 if (el) {
                     el.classList.toggle('open');
                     var arrow = el.querySelector('.arrow');
-                    if (arrow) arrow.textContent = el.classList.contains('open') ? '▴' : '▾';
+                    if (arrow) arrow.textContent = el.classList.contains('open') ? '\u25b4' : '\u25be';
                 }
             });
         })(headers[i]);
     }
 
-    // Hamburger nav
+    // ── Hamburger nav ─────────────────────────────
     var toggle = document.getElementById('nav-toggle');
     var drawer = document.getElementById('nav-drawer');
     if (toggle && drawer) {
@@ -1489,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scroll
+    // ── Smooth scroll ─────────────────────────────
     var anchors = document.querySelectorAll('a[href^="#"]');
     for (var j = 0; j < anchors.length; j++) {
         (function(a) {
@@ -1503,6 +1563,30 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         })(anchors[j]);
     }
+
+
+    // ══════════════════════════════════════════════
+    // TIMELINE DRAW — subtle, on scroll entry
+    // ══════════════════════════════════════════════
+    if (!window.IntersectionObserver) return;
+
+    var tlIO = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            var tl = entry.target;
+            tl.classList.add('tl-visible');
+            var items = tl.querySelectorAll('.tl-item');
+            items.forEach(function(item, i) {
+                setTimeout(function() {
+                    item.classList.add('tl-in');
+                }, 150 + i * 90);
+            });
+            tlIO.unobserve(tl);
+        });
+    }, { threshold: 0.06 });
+
+    document.querySelectorAll('.timeline').forEach(function(tl) { tlIO.observe(tl); });
+
 
 });
 </script>
