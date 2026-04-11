@@ -851,6 +851,71 @@
             </div>
         </div>
 
+        
+        <!-- CASE STUDY: High-Availability Sync Architecture -->
+        <div class="cs-card" id="cs-five9">
+            <div class="cs-header">
+                <span class="cs-icon">📡</span>
+                <div class="cs-title-block">
+                    <h3>High-Availability Sync Architecture</h3>
+                    <span class="cs-meta">Odoo 13 · Five9 SFTP · Python Threading · Fiberlux · 2024</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Fiberlux's custom Odoo module synced telephony data (call recordings, transcripts, quality reports) from Five9's SFTP server into the ERP. The original implementation was <strong>fully synchronous</strong> — during large data loads, it blocked Odoo's worker processes company-wide, freezing CRM and invoicing operations simultaneously.</p>
+                        <p>Additional issues: data inconsistencies between Five9 and Odoo, growing storage costs from unmanaged file accumulation (~1M files since 2023), and fragile SFTP connectivity with no retry logic.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Architectural Solution</h4>
+                        <ul>
+                            <li><strong>Decoupled Threading:</strong> Migrated SFTP business logic to independent Python threads — achieving <em>zero perceived latency</em> for end users during mass synchronizations.</li>
+                            <li><strong>Concurrency Control:</strong> Indexed boolean flags in PostgreSQL manage thread state and prevent race conditions across concurrent sync workers.</li>
+                            <li><strong>SQL Optimization:</strong> B-Tree indexes on <code>Many2one</code> foreign keys + PostgreSQL views reduced query cost on 40k+ record tables for high-performance reporting.</li>
+                            <li><strong>Batch Sanitization:</strong> Configurable <code>days_to_sanitize</code> with batch processing — auto-purges stale files on schedule, achieving 30% storage reduction.</li>
+                            <li><strong>Resilient SFTP Client:</strong> Re-engineered using <strong>Fabric</strong> (replacing Paramiko) with hierarchical exception handling and automatic connection retry — handles network instability without operator intervention.</li>
+                            <li><strong>Memory-Efficient Batch Governor:</strong> Configurable batch-size controller terminates remote scanning immediately upon reaching limit, preventing OOM during massive historical migrations.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Before vs. After</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Dimension</th><th>Legacy (Sync)</th><th>Async Architecture</th></tr></thead>
+                        <tbody>
+                            <tr><td>ERP Impact</td><td class="val-before">Company-wide Odoo freeze during sync</td><td class="val-after">Zero perceived latency — fully decoupled</td></tr>
+                            <tr><td>Data Consistency</td><td class="val-before">Inconsistencies between Five9 and Odoo</td><td class="val-after">100% record-level consistency guaranteed</td></tr>
+                            <tr><td>Storage</td><td class="val-before">Unbounded accumulation (~1M files)</td><td class="val-after">30% reduction via auto-batch sanitization</td></tr>
+                            <tr><td>Query Performance</td><td class="val-before">Slow scans on 40k+ record tables</td><td class="val-after">B-Tree indexed, view-optimized queries</td></tr>
+                            <tr><td>SFTP Resilience</td><td class="val-before">Hard failures on network issues</td><td class="val-after">Auto-retry with hierarchical error handling</td></tr>
+                            <tr><td>RAM Stability</td><td class="val-before">Risk of OOM on 100k+ files</td><td class="val-after">Flat memory footprint via batch-limit governor</td></tr>
+                            <tr><td>Race Conditions</td><td class="val-before">Possible data corruption under load</td><td class="val-after">Eliminated via indexed thread-state flags</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">0ms</span><span class="imp-l">ERP latency during sync</span></div>
+                        <div class="cs-impact"><span class="imp-n">30%</span><span class="imp-l">Storage reduction</span></div>
+                        <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Data consistency</span></div>
+                        <div class="cs-impact"><span class="imp-n">40k+</span><span class="imp-l">Records optimized</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Python · Odoo v13</span>
+                        <span class="proj-tag">SFTP · Fabric</span>
+                        <span class="proj-tag">Python Threading</span>
+                        <span class="proj-tag">PostgreSQL · B-Tree Index</span>
+                        <span class="proj-tag">Concurrency Control</span>
+                        <span class="proj-tag">Linux · Server Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- CASE STUDY: EV Governance -->
         <div class="cs-card" id="cs-ev">
             <div class="cs-header">
