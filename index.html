@@ -744,6 +744,109 @@
     <div class="container">
         <h2 class="section-heading">Case Studies <span class="bar"></span></h2>
 
+        <!-- CASE STUDY: SSR Reingeniería -->
+        <div class="cs-card" id="cs-ssr">
+            <div class="cs-header">
+                <span class="cs-icon">🔄</span>
+                <div class="cs-title-block">
+                    <h3>SSR Re-engineering — Network Automation for ISP Operations</h3>
+                    <span class="cs-meta">Odoo v13 · Python · REST APIs · TL1 Commands · Fiberlux · 2026</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Fiberlux operates an ISP with hundreds of active contracts. Any change to a customer's service status — suspension for non-payment, reactivation after payment, cancellation — required the NOC team to manually interact with the OLT (ZENIT ONE) through a web interface.</p>
+                        <p>The existing Odoo module triggered a <strong>web scraping robot</strong> that simulated browser clicks on the ZENIT ONE interface. Each service change took <strong>~30 seconds</strong>, with no actual confirmation that the change was applied in the network. On billing peak days (days 9–10 of each month), processing 94–135 contracts meant <strong>~47 minutes of HTTP worker blockage</strong> — causing Odoo timeouts company-wide.</p>
+                        <p>Additional failure modes: the robot had no result verification, silently failed on network changes, and made duplicate calls to a legacy v1 endpoint while the new v2 was active — causing race conditions that corrupted action records.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Architectural Solution</h4>
+                        <ul>
+                            <li><strong>Direct TL1 API integration</strong> via an intermediary service (APIOdoo) — replaced browser scraping with authenticated TL1 commands (<code>CHG-ONU-STAT-PON</code>, <code>LST-ONU-DETAIL</code>) executing in <strong>~7s per service</strong>.</li>
+                            <li><strong>Async dispatch queue</strong> — when GPON service count exceeds a configurable threshold (default: 10), <code>set_done()</code> returns in &lt;1s, enqueuing action lines with <code>is_pending_dispatch=True</code>. A dedicated cron dispatches batches of 8 every 2 minutes.</li>
+                            <li><strong>Polling confirmation cron</strong> — separate 5-minute cron calls <code>PollZenitStatus</code>, reading real <code>ADMINSTAT</code> from the OLT port before marking any action as complete. The SSR only closes when all lines are confirmed in the network.</li>
+                            <li><strong>Multi-equipment discriminator</strong> — when ZENIT ONE returns multiple ONU records for the same service ID (migrated or relocated equipment), the system disambiguates by <code>onu_id</code> (last OID segment) — preventing accidental modification of a different customer's port.</li>
+                            <li><strong>Four-flow state machine</strong> — suspension, reactivation, cancellation, and administrative cancellation each have their own valid line state transitions, blocking inappropriate operations silently and correctly.</li>
+                            <li><strong>Email notification pipeline</strong> — async mode sends two emails: one when the dispatch queue empties (services sent to network), one when the SSR closes completely (all confirmed). Applied to both sync and async flows.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Silent Bugs Found &amp; Fixed</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Bug</th><th>Symptom</th><th>Root cause &amp; fix</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Duplicate <code>execute_action_manual</code> body</td>
+                                <td class="val-before">Reactivated services landed in <code>pending</code> instead of <code>done</code> when Fibra Directa NOC confirmed</td>
+                                <td class="val-after">Second method body shadowed the first in Python; the shadowed copy used <code>stop_date</code> to determine state, reverting an agreed business rule. Removed duplicate; single implementation with savepoints retained.</td>
+                            </tr>
+                            <tr>
+                                <td><code>tipo_map</code> mapping <code>cancel → suspend</code></td>
+                                <td class="val-before">NOC Panel showed "Suspension" type for cancellation actions; <code>state_new_request</code> wrote <code>suspend</code> instead of <code>cancel</code></td>
+                                <td class="val-after">Field <code>type</code> in <code>request.action.subscription.line</code> is a fixed Selection (only <code>suspend</code>/<code>activation</code> valid). Separated into two maps: <code>tipo_map</code> for the DB field, <code>state_new_map</code> for the display value.</td>
+                            </tr>
+                            <tr>
+                                <td><code>state_api_ids</code> blocking cancellations</td>
+                                <td class="val-before">All cancellation SSRs silently found zero processable lines — <code>"sin líneas procesables"</code> with no error</td>
+                                <td class="val-after"><code>state_api_ids</code> only covers ZENIT ONE states (<code>suspend</code>/<code>done</code>). Cancellations always route to NOC manual — skip that filter for <code>cancel</code>/<code>cancel-adm</code> types.</td>
+                            </tr>
+                            <tr>
+                                <td>Race condition on DID/OID write</td>
+                                <td class="val-before"><code>ERROR: no se pudo serializar el acceso</code> — APIOdoo writing back via XML-RPC while Odoo held the row lock</td>
+                                <td class="val-after">APIOdoo returns DID/OID in the HTTP response body. Odoo writes locally in its own transaction. No cross-process writes.</td>
+                            </tr>
+                            <tr>
+                                <td>v1 legacy duplicate calls</td>
+                                <td class="val-before">Each action line triggered both the v2 API and the old v1 robot endpoint simultaneously</td>
+                                <td class="val-after">Override of <code>resent_json_action_robot()</code> with three exit conditions: manual NOC line, <code>action_in_progress=True</code>, or json already contains DID/OID from v2.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Before vs. After</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Dimension</th><th>Legacy (Robot Scraper)</th><th>Re-engineered (TL1 APIs)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Execution method</td><td class="val-before">Browser click simulation via web scraping</td><td class="val-after">Direct TL1 API commands (CHG-ONU-STAT-PON)</td></tr>
+                            <tr><td>Speed per service</td><td class="val-before">~30 seconds</td><td class="val-after">~7 seconds (~4× faster per service)</td></tr>
+                            <tr><td>Peak day (135 contracts)</td><td class="val-before">~67 min — HTTP worker timeout</td><td class="val-after">&lt;1s operator wait; async dispatch in background</td></tr>
+                            <tr><td>Network confirmation</td><td class="val-before">Assumed — no real verification</td><td class="val-after">ADMINSTAT read from OLT port (LST-ONU-DETAIL)</td></tr>
+                            <tr><td>Multi-equipment contracts</td><td class="val-before">No discrimination — risk of touching wrong port</td><td class="val-after">Disambiguated by onu_id (OID last segment)</td></tr>
+                            <tr><td>SSR close condition</td><td class="val-before">Closed on first successful action</td><td class="val-after">Closes only when all action lines confirmed</td></tr>
+                            <tr><td>Cancellation flow</td><td class="val-before">Not functional — silently returned 0 lines</td><td class="val-after">4 flows validated: suspend, reactivate, cancel, cancel-adm</td></tr>
+                            <tr><td>Operator notification</td><td class="val-before">Toast on screen only (missed if browser closed)</td><td class="val-after">Email at dispatch complete + email at SSR close</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">~4×</span><span class="imp-l">Faster per service</span></div>
+                        <div class="cs-impact"><span class="imp-n">&lt;1s</span><span class="imp-l">Operator wait (async)</span></div>
+                        <div class="cs-impact"><span class="imp-n">4</span><span class="imp-l">Flows validated in prod</span></div>
+                        <div class="cs-impact"><span class="imp-n">5</span><span class="imp-l">Silent bugs eliminated</span></div>
+                        <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">False confirmations</span></div>
+                        <div class="cs-impact"><span class="imp-n">100%</span><span class="imp-l">Network-verified closes</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Python · Odoo v13</span>
+                        <span class="proj-tag">TL1 Network APIs</span>
+                        <span class="proj-tag">REST · Requests</span>
+                        <span class="proj-tag">Async Cron Queue</span>
+                        <span class="proj-tag">PostgreSQL · State Machine</span>
+                        <span class="proj-tag">JWT Session Management</span>
+                        <span class="proj-tag">XML XPath Inheritance</span>
+                        <span class="proj-tag">Email Pipeline</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- CASE STUDY: Five9 Data Recovery -->
         <div class="cs-card" id="cs-five9-recovery">
             <div class="cs-header">
