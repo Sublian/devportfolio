@@ -744,6 +744,131 @@
     <div class="container">
         <h2 class="section-heading">Case Studies <span class="bar"></span></h2>
 
+        <!-- CASE STUDY: Nexus OMS — FEATURED -->
+        <div class="cs-card" id="cs-nexus">
+            <div class="cs-header">
+                <span class="cs-icon">🧭</span>
+                <div class="cs-title-block">
+                    <h3>Nexus OMS — Multi-Tenant Order Management Platform (SaaS in Progress)</h3>
+                    <span class="cs-meta">Django 6 · Clean Architecture · DDD · HTMX · Celery · Multi-Tenancy · Personal Project · 2025–Present</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>What It Is</h4>
+                        <p>Nexus is a personal SaaS project — an Order Management System built weekend by weekend with a deliberate architectural thesis: that a Django project can scale without becoming a monolith trap. It targets Latin American SMBs that need electronic invoicing (SUNAT), multi-warehouse inventory, and customer traceability in one platform.</p>
+                        <p>The goal is eventually a multi-tenant SaaS where each business (tenant) operates in full data isolation — its own orders, products, clients, and financial reports — on a shared infrastructure. A CRM layer for customer follow-up and sales opportunity tracking is planned for future versions.</p>
+                        <p>Current status: core OMS fully functional, invoicing pipeline wired, 220+ tests passing. Not production-deployed yet — this is active development, not a finished product.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>The Architectural Thesis</h4>
+                        <p>Most Django projects accumulate logic in models and views until they can't be tested without a running database. Nexus is built against that tendency from the start: <strong>Clean Architecture</strong> with a hard <code>src/domain/</code>, <code>src/application/</code>, <code>src/infrastructure/</code>, <code>src/interfaces/</code> boundary structure.</p>
+                        <p>Domain services hold business logic. Models are persistence schemas. Views are thin adapters. The payoff: the 220+ test suite runs deterministically without HTTP calls, mocking only at the infrastructure boundary.</p>
+                        <p>Some parts of the domain are still coupled to Django ORM — an honest tradeoff accepted during active development. The architecture exists as a constraint that makes the coupling visible and removable, not as a description of a finished state.</p>
+                    </div>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Systems Built</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>System</th><th>What it does</th><th>Technical highlight</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Multi-Tenancy</td>
+                                <td class="val-after">Full org-level data isolation: each tenant sees only its own orders, products, clients, and KPIs</td>
+                                <td><code>OrganizationMiddleware</code> resolves tenant from header (<code>X-Org-ID</code>) or URL slug, stores in thread-local. Custom ORM managers inject <code>WHERE tenant_id = X</code> on every query automatically.</td>
+                            </tr>
+                            <tr>
+                                <td>OMS Order Lifecycle</td>
+                                <td class="val-after">Full state machine: <code>DRAFT → PENDING → PAID → SHIPPED → DELIVERED → RETURNED</code></td>
+                                <td>FSM enforces valid transitions. <code>select_for_update()</code> prevents race conditions on stock. Stock double-decrement bug caught and fixed: single source of truth via Django signal.</td>
+                            </tr>
+                            <tr>
+                                <td>Financial Engine</td>
+                                <td class="val-after">Net margin reports with real COGS, commissions, and refund accounting</td>
+                                <td><code>FinanceService</code>: COGS calculated from last received <code>PurchaseOrderItem</code> per product. Fallback heuristic (50% margin) when no purchase history. Decoupled from order flow, reusable.</td>
+                            </tr>
+                            <tr>
+                                <td>Electronic Invoicing Pipeline</td>
+                                <td class="val-after">SUNAT-ready invoice state machine with async sync, retry queue, and dead letter handling</td>
+                                <td>Provider abstraction via Adapter pattern — <code>MockNubefactClient</code> in dev, real client in prod. Swap provider without touching domain logic. Use case: <code>CreateInvoiceUseCase</code> / <code>QueryInvoiceStatusUseCase</code>.</td>
+                            </tr>
+                            <tr>
+                                <td>Async Task Pipeline</td>
+                                <td class="val-after">Background PDF generation, notification dispatch, finance reporting</td>
+                                <td>Celery + Redis. Mocker Pattern for test isolation: async tasks are synchronous in unit tests — no broker required to run the suite.</td>
+                            </tr>
+                            <tr>
+                                <td>Notification System</td>
+                                <td class="val-after">Multi-channel: Email, Telegram, WhatsApp — switchable per context</td>
+                                <td>Strategy Pattern: <code>EmailNotification</code>, <code>TelegramNotification</code>, <code>WhatsAppNotification</code> implement the same interface. Channel selection at call time, no conditionals in business logic.</td>
+                            </tr>
+                            <tr>
+                                <td>Operational Dashboard</td>
+                                <td class="val-after">KPIs per tenant: invoicing rates, queue depth, retry count, provider latency, reconciliation status</td>
+                                <td><code>DashboardKPIService</code> aggregates all metrics. HTMX partial updates for reactive refresh without SPA overhead. <code>DailyInvoiceSeriesService</code> feeds Chart.js visualizations.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Deliberate Architecture Decisions</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Decision</th><th>Alternatives rejected</th><th>Reasoning</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Modular monolith over microservices</td>
+                                <td class="val-before">Separate services from day 1</td>
+                                <td class="val-after">Clean layer boundaries make extraction tractable later. Premature splitting adds operational cost before product-market fit.</td>
+                            </tr>
+                            <tr>
+                                <td>Shared DB + tenant discriminator over DB-per-tenant</td>
+                                <td class="val-before">Separate schema or DB per tenant</td>
+                                <td class="val-after">Operationally simpler at early scale. ORM managers enforce isolation at query level. Easier to migrate to DB-per-tenant if needed.</td>
+                            </tr>
+                            <tr>
+                                <td>HTMX + Django templates over React/SPA</td>
+                                <td class="val-before">Full SPA frontend</td>
+                                <td class="val-after">Operator-facing dashboard doesn't need client-side routing. Server-side rendering with HTMX partials gives reactive UX at fraction of the complexity. Alpine.js covers remaining interactivity.</td>
+                            </tr>
+                            <tr>
+                                <td>Django 6 + Python 3.12</td>
+                                <td class="val-before">Stable LTS versions</td>
+                                <td class="val-after">Personal project: deliberate choice to stay on the leading edge, learn new async capabilities, and avoid accumulating upgrade debt.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block">
+                    <h4>Status &amp; Roadmap</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">220+</span><span class="imp-l">Automated tests</span></div>
+                        <div class="cs-impact"><span class="imp-n">5</span><span class="imp-l">Milestones complete</span></div>
+                        <div class="cs-impact"><span class="imp-n">2</span><span class="imp-l">Interfaces (API + Web)</span></div>
+                        <div class="cs-impact"><span class="imp-n">CI/CD</span><span class="imp-l">GitHub Actions + Codecov</span></div>
+                        <div class="cs-impact"><span class="imp-n">SUNAT</span><span class="imp-l">Invoice pipeline wired</span></div>
+                        <div class="cs-impact"><span class="imp-n">→ SaaS</span><span class="imp-l">Target deployment</span></div>
+                    </div>
+                    <div class="cs-stack-row" style="margin-top:1.2rem;">
+                        <span class="proj-tag">Python 3.12 · Django 6</span>
+                        <span class="proj-tag">Django REST Framework</span>
+                        <span class="proj-tag">HTMX · TailwindCSS · Alpine.js</span>
+                        <span class="proj-tag">Celery · Redis</span>
+                        <span class="proj-tag">PostgreSQL · JSONB</span>
+                        <span class="proj-tag">Docker · GitHub Actions</span>
+                        <span class="proj-tag">Clean Architecture · DDD</span>
+                        <span class="proj-tag">Multi-Tenancy</span>
+                        <span class="proj-tag">FSM · Strategy · Adapter</span>
+                        <span class="proj-tag">Nubefact · SUNAT</span>
+                    </div>
+                    <p style="margin-top:1.2rem;font-size:.82rem;color:var(--muted);">
+                        <a href="https://github.com/Sublian/nexus-oms-django" target="_blank" style="color:var(--accent);">View Repository →</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- CASE STUDY: SSR Reingeniería -->
         <div class="cs-card" id="cs-ssr">
             <div class="cs-header">
@@ -1227,6 +1352,126 @@
                     </div>
                 </div>
             </div>
+        <!-- CASE STUDY: Odoo Server Stabilization -->
+        <div class="cs-card" id="cs-odoo-infra">
+            <div class="cs-header">
+                <span class="cs-icon">🛠️</span>
+                <div class="cs-title-block">
+                    <h3>Odoo Infrastructure Stabilization — From Brittle to Production-Grade</h3>
+                    <span class="cs-meta">Linux · Systemd · Odoo v13 · PostgreSQL · VPS Architecture · 2026</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Two separate VPS environments running Odoo 13 were independently producing 502 Bad Gateway failures and process crashes. Both had been stood up without proper infrastructure configuration — no Swap, no process supervision, and worker settings that either silently disabled all resource limits or set them below the minimum threshold required for startup.</p>
+                        <p>The <strong>testapi environment</strong> (port 18069, 8 GB RAM VPS) ran in single-threaded mode (<code>workers=0</code>), which silently disables all memory and time limit enforcement in Odoo. It had no Swap, 5.3 GB trapped in OS buffer cache, and was leaking PostgreSQL connections to every database on the server due to a missing <code>dbfilter</code>. The same VPS also hosts the <strong>production API</strong> (port 8069) — which at the time of intervention had none of these fixes applied, making it an active risk.</p>
+                        <p>The <strong>testodoo environment</strong> (separate VPS, 16 GB RAM) had the opposite problem: 6 workers configured with <code>limit_memory_hard=2.5 GB</code> — below the ~1.7 GB floor required just to compile the registry of 489 custom modules. Every worker was dying before processing a single request, creating an infinite zombie loop that pinned the CPU without serving any traffic.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Diagnosis &amp; What Made It Non-Trivial</h4>
+                        <p>The testodoo failure was especially deceptive. Reducing memory limits to "protect the server" is intuitive — but here it caused the exact opposite: a process supervisor that couldn't stop restarting dead workers. The diagnostic key was in the logs: <code>request_count: 0, registry count: 1</code> on every death. Workers were being killed during initialization, before serving anything.</p>
+                        <p>The testapi failure was a different class of problem: <strong>structural invisibility</strong>. With <code>workers=0</code>, Odoo's entire resource control layer — soft/hard memory limits, CPU time limits, worker recycling — is inert. The configuration file had values set, but they were completely ignored at runtime. The server was one heavy API request away from OOM-Killer termination with no recovery path.</p>
+                        <p>Additional root cause: no Swap on either server meant the Linux OOM-Killer had zero room to maneuver. Any RAM spike would terminate processes immediately rather than spilling to disk.</p>
+                    </div>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Configuration Changes Applied</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Parameter</th><th>Before</th><th>After (testapi)</th><th>After (testodoo)</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><code>workers</code></td>
+                                <td class="val-before">0 — all limits inert</td>
+                                <td class="val-after">2 — preforking active</td>
+                                <td class="val-after">4 — reduced from 6</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit_memory_soft</code></td>
+                                <td class="val-before">2.0 GB (ignored)</td>
+                                <td class="val-after">2.0 GB (active)</td>
+                                <td class="val-after">3.0 GB — above registry floor</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit_memory_hard</code></td>
+                                <td class="val-before">2.5 GB (ignored / too low)</td>
+                                <td class="val-after">2.5 GB (active)</td>
+                                <td class="val-after">4.0 GB — 1 GB headroom over soft</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit_time_cpu</code></td>
+                                <td class="val-before">36,000s (10 hours)</td>
+                                <td class="val-after">600s (10 min)</td>
+                                <td class="val-after">900s</td>
+                            </tr>
+                            <tr>
+                                <td><code>dbfilter</code></td>
+                                <td class="val-before">Not set — leaking to all DBs</td>
+                                <td class="val-after"><code>^testapi$</code></td>
+                                <td class="val-after">Scoped to env DB</td>
+                            </tr>
+                            <tr>
+                                <td>Swap</td>
+                                <td class="val-before">0 B — OOM-Killer unprotected</td>
+                                <td class="val-after">2 GB provisioned</td>
+                                <td class="val-after">4 GB provisioned</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Infrastructure Actions Beyond Config</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Action</th><th>Reason</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>OS cache purge via <code>drop_caches</code></td>
+                                <td>5.3 GB locked in buff/cache left only 491 MB free — not enough to start workers</td>
+                                <td class="val-after">5.3 GB of clean RAM immediately available for Odoo and PostgreSQL</td>
+                            </tr>
+                            <tr>
+                                <td>Port cleanup with <code>fuser -k</code></td>
+                                <td>Orphaned sockets from crashed processes blocked clean restart on port 18069</td>
+                                <td class="val-after">Port fully released; restart succeeded without manual kill loops</td>
+                            </tr>
+                            <tr>
+                                <td>Systemd service (<code>odoo13-test.service</code>)</td>
+                                <td>Processes had been managed with <code>nohup &amp;</code> — invisible to OS, no restart policy, lost on reboot</td>
+                                <td class="val-after"><code>Restart=on-failure</code> + <code>systemctl enable</code>: auto-recovery and persistence across reboots</td>
+                            </tr>
+                            <tr>
+                                <td>Longpolling worker (gevent, port 8072)</td>
+                                <td>testodoo had longpolling misconfigured; Nginx was rejecting its connections</td>
+                                <td class="val-after">Dedicated gevent subprocess enabled; basic routing functional. WebSocket upgrade logged as future improvement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">Crashes post-fix</span></div>
+                        <div class="cs-impact"><span class="imp-n">140ms</span><span class="imp-l">Avg API latency</span></div>
+                        <div class="cs-impact"><span class="imp-n">489</span><span class="imp-l">Modules in 4.38s</span></div>
+                        <div class="cs-impact"><span class="imp-n">5.3 GB</span><span class="imp-l">RAM recovered</span></div>
+                        <div class="cs-impact"><span class="imp-n">2</span><span class="imp-l">Envs stabilized</span></div>
+                        <div class="cs-impact"><span class="imp-n">Auto</span><span class="imp-l">Recovery on failure</span></div>
+                    </div>
+                    <div class="cs-stack-row">
+                        <span class="proj-tag">Linux · Bash</span>
+                        <span class="proj-tag">Systemd</span>
+                        <span class="proj-tag">Odoo v13 · .odoorc</span>
+                        <span class="proj-tag">PostgreSQL · Connection Pools</span>
+                        <span class="proj-tag">Nginx · Reverse Proxy</span>
+                        <span class="proj-tag">VPS Administration</span>
+                        <span class="proj-tag">Memory Management</span>
+                        <span class="proj-tag">Process Supervision</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>
