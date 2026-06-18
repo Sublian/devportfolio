@@ -869,6 +869,84 @@
             </div>
         </div>
 
+        <!-- CASE STUDY: Payroll ETL — Clínica Santa Isabel -->
+        <div class="cs-card" id="cs-payroll-etl">
+            <div class="cs-header">
+                <span class="cs-icon">📊</span>
+                <div class="cs-title-block">
+                    <h3>Payroll ETL Pipeline — Automating Profit-Sharing for 300 Healthcare Workers</h3>
+                    <span class="cs-meta">Python · Pandas · PostgreSQL · Stored Procedures · PDF Generation · Clínica Santa Isabel</span>
+                </div>
+                <span class="cs-toggle">View Case Study <span class="arrow">▾</span></span>
+            </div>
+            <div class="cs-body">
+                <div class="cs-grid">
+                    <div class="cs-block">
+                        <h4>The Problem</h4>
+                        <p>Clínica Santa Isabel's internal payroll system (IsisPlan) handled standard payroll processes but had no module for employee profit-sharing (<em>utilidades</em>). The calculation was done entirely by hand in Excel — manually cross-referencing payroll and liquidation data for ~300 active workers, applying Peruvian labor law rules (D.Leg. 892), and adjusting for fifth-category income tax withholdings.</p>
+                        <p>The process was error-prone and non-reproducible. Workers across the clinic had heterogeneous compensation structures — fixed-salary administrative staff and hourly-rate clinical staff (physicians, nurses, technicians) — each with different calculation bases under law. The hardest edge case: workers who had ceased employment and re-entered within the same fiscal year, requiring pro-rated calculations across two separate employment periods.</p>
+                        <p>The project ran for 3 months from local development to production deployment, replacing the Excel process entirely.</p>
+                    </div>
+                    <div class="cs-block">
+                        <h4>Technical Approach</h4>
+                        <p>The pipeline extracted data directly from IsisPlan's PostgreSQL database — using <strong>stored procedures</strong> to pre-aggregate payroll and liquidation records at the database level before ingestion. This kept complex join and filtering logic in SQL where it performs better, and reserved Python/Pandas for business rule application and edge case handling.</p>
+                        <p>Once loaded into DataFrames, the transformation layer applied profit-sharing rules per worker category, detected cese/reingreso cases via duplicate worker IDs with non-contiguous date ranges, and processed each employment segment independently before aggregating the final entitlement.</p>
+                        <p>A superuser interface allowed the payroll administrator (<em>planillero</em>) to review intermediate values and adjust criteria before committing — specifically for fifth-category tax withholding adjustments that required human judgment. The final results were persisted back to PostgreSQL and surfaced through three outputs: an individual record viewer/modal per worker, a per-worker PDF payment slip, and a master Excel file with all records and calculation variables for audit.</p>
+                    </div>
+                </div>
+                <div class="cs-block" style="margin-bottom:1.6rem;">
+                    <h4>Key Technical Challenges</h4>
+                    <table class="cs-table">
+                        <thead><tr><th>Challenge</th><th>Complexity</th><th>Solution</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Cese y reingreso</td>
+                                <td class="val-before">Worker ceases mid-year and re-enters — two employment periods in the same fiscal year, different accrued days and base salary per segment</td>
+                                <td class="val-after">DataFrame logic detects duplicate worker IDs with non-contiguous date ranges. Each segment processed independently, then aggregated with pro-rating capped per D.Leg. 892 limits.</td>
+                            </tr>
+                            <tr>
+                                <td>Heterogeneous compensation</td>
+                                <td class="val-before">Fixed-salary (admin) vs. hourly-rate (clinical) — different calculation base for profit-sharing under Peruvian law</td>
+                                <td class="val-after">Compensation type flag set at extraction layer via stored procedure. Separate Pandas calculation branches per category, merged in final DataFrame before output.</td>
+                            </tr>
+                            <tr>
+                                <td>Multi-source merge</td>
+                                <td class="val-before">Nómina and liquidación tables had different schemas, time granularities, and worker ID formats</td>
+                                <td class="val-after">Normalization step before merge: ID canonicalization, period alignment, null handling. Stored procedures pre-filtered irrelevant records to reduce Python-side complexity.</td>
+                            </tr>
+                            <tr>
+                                <td>Fifth-category tax withholding</td>
+                                <td class="val-before">Retention amounts require human judgment — no fully automatable rule for all cases</td>
+                                <td class="val-after">Pipeline flags affected records for superuser review. Planillero adjusts values before final commit. System enforces that flagged records must be reviewed before output generation.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cs-block">
+                    <h4>Impact</h4>
+                    <div class="cs-impacts">
+                        <div class="cs-impact"><span class="imp-n">~300</span><span class="imp-l">Workers processed</span></div>
+                        <div class="cs-impact"><span class="imp-n">&lt;3 min</span><span class="imp-l">Full run (was: days)</span></div>
+                        <div class="cs-impact"><span class="imp-n">~99%</span><span class="imp-l">Error reduction</span></div>
+                        <div class="cs-impact"><span class="imp-n">3</span><span class="imp-l">Output formats (modal · PDF · Excel)</span></div>
+                        <div class="cs-impact"><span class="imp-n">0</span><span class="imp-l">Manual Excel cross-referencing</span></div>
+                        <div class="cs-impact"><span class="imp-n">3 mo</span><span class="imp-l">Dev → Production</span></div>
+                    </div>
+                    <div class="cs-stack-row" style="margin-top:1.2rem;">
+                        <span class="proj-tag">Python · Pandas</span>
+                        <span class="proj-tag">PostgreSQL · Stored Procedures</span>
+                        <span class="proj-tag">ETL Pipeline</span>
+                        <span class="proj-tag">PDF Generation</span>
+                        <span class="proj-tag">Excel Export</span>
+                        <span class="proj-tag">Data Transformation</span>
+                        <span class="proj-tag">D.Leg. 892 · Peruvian Labor Law</span>
+                        <span class="proj-tag">Edge Case Handling</span>
+                        <span class="proj-tag">IsisPlan Integration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- CASE STUDY: SSR Reingeniería -->
         <div class="cs-card" id="cs-ssr">
             <div class="cs-header">
